@@ -4,6 +4,8 @@ server:
     context-path: /mall #上下文路径
 spring:
   mvc:
+    servlet:
+      load-on-startup: 1 #避免Idea控制台已弹出-dispatcherServlet
     view:
       suffix: .jsp
       prefix: /WEB-INF/page/

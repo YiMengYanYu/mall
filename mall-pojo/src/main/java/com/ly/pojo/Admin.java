@@ -1,6 +1,8 @@
 package com.ly.pojo;
 
+import lombok.Data;
 
+@Data
 public class Admin {
 
   private long adminId;
@@ -10,48 +12,6 @@ public class Admin {
   private String adminProfilePictureSrc;
 
 
-  public long getAdminId() {
-    return adminId;
-  }
 
-  public void setAdminId(long adminId) {
-    this.adminId = adminId;
-  }
-
-
-  public String getAdminName() {
-    return adminName;
-  }
-
-  public void setAdminName(String adminName) {
-    this.adminName = adminName;
-  }
-
-
-  public String getAdminNickname() {
-    return adminNickname;
-  }
-
-  public void setAdminNickname(String adminNickname) {
-    this.adminNickname = adminNickname;
-  }
-
-
-  public String getAdminPassword() {
-    return adminPassword;
-  }
-
-  public void setAdminPassword(String adminPassword) {
-    this.adminPassword = adminPassword;
-  }
-
-
-  public String getAdminProfilePictureSrc() {
-    return adminProfilePictureSrc;
-  }
-
-  public void setAdminProfilePictureSrc(String adminProfilePictureSrc) {
-    this.adminProfilePictureSrc = adminProfilePictureSrc;
-  }
 
 }

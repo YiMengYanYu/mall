@@ -1,6 +1,8 @@
 package com.ly.pojo;
 
+import lombok.Data;
 
+@Data
 public class Property {
 
   private long propertyId;
@@ -8,30 +10,5 @@ public class Property {
   private long propertyCategoryId;
 
 
-  public long getPropertyId() {
-    return propertyId;
-  }
-
-  public void setPropertyId(long propertyId) {
-    this.propertyId = propertyId;
-  }
-
-
-  public String getPropertyName() {
-    return propertyName;
-  }
-
-  public void setPropertyName(String propertyName) {
-    this.propertyName = propertyName;
-  }
-
-
-  public long getPropertyCategoryId() {
-    return propertyCategoryId;
-  }
-
-  public void setPropertyCategoryId(long propertyCategoryId) {
-    this.propertyCategoryId = propertyCategoryId;
-  }
 
 }
