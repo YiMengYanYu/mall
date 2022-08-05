@@ -1,5 +1,6 @@
 package com.ly;
 
+import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.util.DigestUtils;
@@ -10,6 +11,7 @@ import org.springframework.util.DigestUtils;
  * @Description: TODO
  */
 @SpringBootApplication
+@MapperScan(basePackages = "com.ly.mapper")
 public class MallRun {
     public static void main(String[] args) {
 

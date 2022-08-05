@@ -6,4 +6,5 @@ package com.ly.constants.keyconstants;
  * @Description: TODO
  */
 public class KeyConstants {
+    public  static  final  String ADDRESS_LIST ="addressList";
 }

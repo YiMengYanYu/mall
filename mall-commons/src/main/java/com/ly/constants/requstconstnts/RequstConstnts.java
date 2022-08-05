@@ -7,4 +7,5 @@ package com.ly.constants.requstconstnts;
  */
 public class RequstConstnts {
     public static final  String REG_HTML ="/register.html";
+    public static final  String ADDRESS_ID ="/address/{id}";
 }
