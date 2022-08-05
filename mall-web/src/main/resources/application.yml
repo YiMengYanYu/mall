@@ -1,0 +1,35 @@
+server:
+  port: 80 #端口号
+  servlet:
+    context-path: /mall #上下文路径
+spring:
+  mvc:
+    view:
+      suffix: .jsp
+      prefix: /WEB-INF/page/
+  redis:
+    host: 192.168.9.128
+    port: 6379
+  profiles:
+    active: dev
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss #格式化时间
+    time-zone: GMT+8 #时区
+  datasource:
+    druid:
+      driver-class-name: com.mysql.cj.jdbc.Driver
+      username: root
+      password: Admin123!
+      url: jdbc:mysql://192.168.9.128:3306/mall?serverTimezone=GMT-8
+mybatis-plus:
+  configuration:
+    cache-enabled: false
+    local-cache-scope: statement
+    map-underscore-to-camel-case: false #使用驼峰
+    log-impl: org.apache.ibatis.logging.slf4j.Slf4jImpl #配置日志实现
+  type-aliases-package: com.bdqn.pojo #实体类别名
+  mapper-locations: classpath:mapper/*.xml #mapper文件路径
+  global-config:
+    db-config:
+      table-prefix:  #表前缀
+      id-type: auto            #设置id的自增策略默认是使用雪花算法
