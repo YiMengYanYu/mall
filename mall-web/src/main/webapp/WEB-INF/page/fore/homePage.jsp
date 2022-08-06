@@ -97,7 +97,7 @@
                             <c:if test="${i.index<8}">
                                 <div class="banner_goods_item">
                                     <a href="product/${product.productId}" class="goods_link"></a>
-                                    <img src="${ctx}/res/images/item/productSinglePicture/${product.singleProductImageList[0].productImageSrc}">
+                                    <img src="${ctx}/res/images/item/productSinglePicture/${product.productimage.productimageSrc}">
                                     <a href="product/${product.productId}"
                                        class="goods_name">${product.productName}</a>
                                     <span class="goods_price">￥${product.productSalePrice}</span>

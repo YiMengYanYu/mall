@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ly.mapper.CategoryMapper">
+    <resultMap id="categoryAll" type="com.ly.pojo.Category">
+        <id column="cid" property="categoryId"></id>
+        <result column="categoryName" property="categoryName"></result>
+        <result column="categoryImageSrc" property="categoryImageSrc"></result>
+
+        <collection property="productList" ofType="com.ly.pojo.Product">
+            <id column="productId" property="productId"></id>
+            <result column="cid" property="productCategoryId"></result>
+            <result column="productId" property="productId"></result>
+            <result column="productName" property="productName"></result>
+            <result column="productTitle" property="productTitle"></result>
+            <result column="productPrice" property="productPrice"></result>
+            <result column="productSalePrice" property="productSalePrice"></result>
+            <result column="productCreateDate" property="productCreateDate"></result>
+            <result column="productIsEnabled" property="productIsEnabled"></result>
+            <association property="productimage" javaType="Productimage">
+                <id column="productimageId" property="productimageId"></id>
+                <result column="productimageType" property="productimageType"></result>
+                <result column="productimageSrc" property="productimageSrc"></result>
+                <result column="productimageProductId" property="productimageProductId"></result>
+            </association>
+        </collection>
+    </resultMap>
+
+    <select id="getCategoryAll" resultMap="categoryAll">
+        SELECT `category`.`categoryId` AS cid,
+               `category`.`categoryName`,
+               `category`.`categoryImageSrc`,
+               `product`.`productId`,
+               `product`.`productName`,
+               `product`.`productTitle`,
+               `product`.`productPrice`,
+               `product`.`productSalePrice`,
+               `product`.`productCreateDate`,
+               `product`.`productIsEnabled`,
+               `productimageId`,
+               `productimageType`,
+               `productimageSrc`,
+               `productimageProductId`
+        FROM `category`,
+             `product`,
+             `productimage`
+        WHERE `categoryId` = `productCategoryId`
+          AND `product`.`productId` = `productimage`.`productimageId`
+    </select>
+
+</mapper>
