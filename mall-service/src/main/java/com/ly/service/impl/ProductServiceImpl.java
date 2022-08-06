@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 /**
  * @author YiMeng
@@ -23,7 +24,11 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public List<Product> getProductAll() {
-
-        return  productMapper.selectList(null);
+        List<Product> getProductAll = redisUtil.getCacheList("getProductAll", Product.class);
+        if (getProductAll == null) {
+            getProductAll = productMapper.selectList(null);
+            redisUtil.setCacheObject("getProductAll",getProductAll,60, TimeUnit.SECONDS);
+        }
+        return getProductAll;
     }
 }

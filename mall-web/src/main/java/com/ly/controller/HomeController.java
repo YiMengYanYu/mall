@@ -30,8 +30,6 @@ public class HomeController {
 
         model.addAttribute("categoryList",categoryService.getCategoryAll());
         List<Product> product = productService.getProductAll();
-        System.out.println("_________________________________");
-        System.out.println(product);
         model.addAttribute("specialProductList",product);
         return "/fore/homePage";
     }
