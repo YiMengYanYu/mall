@@ -113,7 +113,7 @@ $(function () {
 
     //非空验证
     $("#register_sub").click(function () {
-        alert(contextPath);
+        //alert(contextPath);
         //用户名
         var userName = $.trim($("input[name=userName]").val());
         //密码

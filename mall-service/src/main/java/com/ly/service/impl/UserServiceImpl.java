@@ -7,7 +7,6 @@ import com.ly.pojo.Address;
 import com.ly.pojo.User;
 import com.ly.service.UserService;
 import com.ly.utils.CodecUtil;
-import lombok.val;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ObjectUtils;
 
@@ -55,5 +54,12 @@ public class UserServiceImpl implements UserService {
         QueryWrapper<User> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq("userName", userName);
         return userMapper.selectOne(queryWrapper);
+    }
+
+    @Override
+    public Boolean login(String username, String password) {
+        User user = getUserByUserName(username);
+        var encrypt = CodecUtil.md5Hex(password, user.getSalt());
+        return encrypt.equals(user.getUserPassword());
     }
 }
