@@ -11,7 +11,9 @@ import java.util.List;
  */
 public interface CategoryService {
 
-   List<Category> getCategoryAll();
+    @Deprecated
+    List<Category> getCategoryAll();
 
+    List<Category> getCategoryAllImpl2();
 
 }

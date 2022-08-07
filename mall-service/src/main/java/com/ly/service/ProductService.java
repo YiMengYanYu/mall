@@ -11,5 +11,7 @@ import java.util.List;
  */
 public interface ProductService {
     List<Product> getProductAll();
+    List<Product> getProductByProductCategoryId(String id);
+    List<Product> getProductIsEnabledEq2();
 
 }

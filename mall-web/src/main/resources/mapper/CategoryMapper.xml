@@ -4,6 +4,56 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.ly.mapper.CategoryMapper">
+
+<!--
+本项目不会使用mapper文件,此文件只是查询的多一种实现,删除文件不会对本体代码有任何影响
+本项目不会使用mapper文件,此文件只是查询的多一种实现,删除文件不会对本体代码有任何影响
+本项目不会使用mapper文件,此文件只是查询的多一种实现,删除文件不会对本体代码有任何影响
+本项目不会使用mapper文件,此文件只是查询的多一种实现,删除文件不会对本体代码有任何影响
+本项目不会使用mapper文件,此文件只是查询的多一种实现,删除文件不会对本体代码有任何影响
+本项目不会使用mapper文件,此文件只是查询的多一种实现,删除文件不会对本体代码有任何影响
+本项目不会使用mapper文件,此文件只是查询的多一种实现,删除文件不会对本体代码有任何影响
+本项目不会使用mapper文件,此文件只是查询的多一种实现,删除文件不会对本体代码有任何影响
+本项目不会使用mapper文件,此文件只是查询的多一种实现,删除文件不会对本体代码有任何影响
+本项目不会使用mapper文件,此文件只是查询的多一种实现,删除文件不会对本体代码有任何影响
+本项目不会使用mapper文件,此文件只是查询的多一种实现,删除文件不会对本体代码有任何影响
+本项目不会使用mapper文件,此文件只是查询的多一种实现,删除文件不会对本体代码有任何影响
+本项目不会使用mapper文件,此文件只是查询的多一种实现,删除文件不会对本体代码有任何影响
+本项目不会使用mapper文件,此文件只是查询的多一种实现,删除文件不会对本体代码有任何影响
+本项目不会使用mapper文件,此文件只是查询的多一种实现,删除文件不会对本体代码有任何影响
+本项目不会使用mapper文件,此文件只是查询的多一种实现,删除文件不会对本体代码有任何影响
+本项目不会使用mapper文件,此文件只是查询的多一种实现,删除文件不会对本体代码有任何影响
+本项目不会使用mapper文件,此文件只是查询的多一种实现,删除文件不会对本体代码有任何影响
+本项目不会使用mapper文件,此文件只是查询的多一种实现,删除文件不会对本体代码有任何影响
+本项目不会使用mapper文件,此文件只是查询的多一种实现,删除文件不会对本体代码有任何影响
+本项目不会使用mapper文件,此文件只是查询的多一种实现,删除文件不会对本体代码有任何影响
+本项目不会使用mapper文件,此文件只是查询的多一种实现,删除文件不会对本体代码有任何影响
+本项目不会使用mapper文件,此文件只是查询的多一种实现,删除文件不会对本体代码有任何影响
+本项目不会使用mapper文件,此文件只是查询的多一种实现,删除文件不会对本体代码有任何影响
+本项目不会使用mapper文件,此文件只是查询的多一种实现,删除文件不会对本体代码有任何影响
+本项目不会使用mapper文件,此文件只是查询的多一种实现,删除文件不会对本体代码有任何影响
+本项目不会使用mapper文件,此文件只是查询的多一种实现,删除文件不会对本体代码有任何影响
+本项目不会使用mapper文件,此文件只是查询的多一种实现,删除文件不会对本体代码有任何影响
+本项目不会使用mapper文件,此文件只是查询的多一种实现,删除文件不会对本体代码有任何影响
+本项目不会使用mapper文件,此文件只是查询的多一种实现,删除文件不会对本体代码有任何影响
+本项目不会使用mapper文件,此文件只是查询的多一种实现,删除文件不会对本体代码有任何影响
+本项目不会使用mapper文件,此文件只是查询的多一种实现,删除文件不会对本体代码有任何影响
+本项目不会使用mapper文件,此文件只是查询的多一种实现,删除文件不会对本体代码有任何影响
+本项目不会使用mapper文件,此文件只是查询的多一种实现,删除文件不会对本体代码有任何影响
+本项目不会使用mapper文件,此文件只是查询的多一种实现,删除文件不会对本体代码有任何影响
+本项目不会使用mapper文件,此文件只是查询的多一种实现,删除文件不会对本体代码有任何影响
+本项目不会使用mapper文件,此文件只是查询的多一种实现,删除文件不会对本体代码有任何影响
+本项目不会使用mapper文件,此文件只是查询的多一种实现,删除文件不会对本体代码有任何影响
+本项目不会使用mapper文件,此文件只是查询的多一种实现,删除文件不会对本体代码有任何影响
+本项目不会使用mapper文件,此文件只是查询的多一种实现,删除文件不会对本体代码有任何影响
+本项目不会使用mapper文件,此文件只是查询的多一种实现,删除文件不会对本体代码有任何影响
+本项目不会使用mapper文件,此文件只是查询的多一种实现,删除文件不会对本体代码有任何影响
+
+-->
+
+
+
+
     <resultMap id="categoryAll" type="com.ly.pojo.Category">
         <id column="cid" property="categoryId"></id>
         <result column="categoryName" property="categoryName"></result>
@@ -19,7 +69,7 @@
             <result column="productSalePrice" property="productSalePrice"></result>
             <result column="productCreateDate" property="productCreateDate"></result>
             <result column="productIsEnabled" property="productIsEnabled"></result>
-            <association property="productimage" javaType="Productimage">
+            <association property="productimage" javaType="com.ly.pojo.Productimage">
                 <id column="productimageId" property="productimageId"></id>
                 <result column="productimageType" property="productimageType"></result>
                 <result column="productimageSrc" property="productimageSrc"></result>
@@ -47,7 +97,7 @@
              `product`,
              `productimage`
         WHERE `categoryId` = `productCategoryId`
-          AND `product`.`productId` = `productimage`.`productimageId`
+          AND `product`.`productId` = `productimage`.`productimageId` AND  `productimageType`=0 LIMIT 0,1000
     </select>
 
 </mapper>

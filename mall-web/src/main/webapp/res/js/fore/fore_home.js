@@ -3,7 +3,7 @@ $(function () {
     //主页切换动画
     getTimer();
     var timer = setInterval(getTimer, 3000);
-    $(".banner_main > a").attr("href", contextPath+"/product/" + $("#banner1").attr("name"));
+    $(".banner_main > a").attr("href", contextPath + "/product/" + $("#banner1").attr("name"));
     //单击商品分类链接时
     $(".banner_div a").click(function () {
         $(".banner_main").unbind("click");
@@ -18,26 +18,22 @@ $(function () {
         $(this).attr("data-status", "ajaxShow");
         $.ajax({
             type: "GET",
-            url: contextPath+"/product/nav/" + $(this).attr("data-toggle"),
+            url: contextPath + "/product/nav/" + $(this).attr("data-toggle"),
             data: null,
             dataType: "json",
             success: function (data) {
                 if (data.success) {
-                    var list = data.category.complexProductList;
-                    for (var i = 0; i < list.length; i++) {
-                        if (list[i].length === 0) {
-                            continue;
+                    div.append("<div class='hot_word'></div>");
+                    var hot_word_div = div.children(".hot_word").last();
+                    var list = data.category;
+                    for (var j = 0; j < list.length; j++) {
+                        var productTitle = list[j].productTitle;
+                        var index = productTitle.indexOf(' ');
+                        if (index !== -1) {
+                            productTitle = productTitle.substring(0, index);
                         }
-                        div.append("<div class='hot_word'></div>");
-                        var hot_word_div = div.children(".hot_word").last();
-                        for (var j = 0; j < list[i].length; j++) {
-                            var productTitle = list[i][j].productTitle;
-                            var index = productTitle.indexOf(' ');
-                            if (index !== -1) {
-                                productTitle = productTitle.substring(0, index);
-                            }
-                            hot_word_div.append("<a href='product/" + list[i][j].productId + "'>" + productTitle + "</a>");
-                        }
+                        hot_word_div.append("<a href='product/" + list[j].productId + "'>" + productTitle + "</a>");
+
                     }
                     //热词样式
                     div.find("a").each(function () {
@@ -81,7 +77,7 @@ function getTimer() {
     var sliders = $(".banner_slider>li");
     var color;
     var img = $("#banner" + index);
-    $(".banner_main > a").attr("href", contextPath+"/product/" + img.attr("name"));
+    $(".banner_main > a").attr("href", contextPath + "/product/" + img.attr("name"));
     if (index === 1) {
         color = "#0F1322";
     } else if (index === 2 || index === 5) {

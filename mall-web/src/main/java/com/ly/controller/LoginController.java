@@ -28,13 +28,17 @@ public class LoginController {
         return "/fore/loginPage";
     }
 
-
+    @GetMapping("/login/logout")
+    public String logout(HttpSession httpSession) {
+        httpSession.invalidate();
+        return login();
+    }
 
     @ResponseBody
     @PostMapping("/login/doLogin")
     public Map<String, Boolean> doLogin(String username, String password, HttpSession httpSession) {
         Map<String, Boolean> map = new HashMap<>(2);
-        System.out.println("-------------------------------------"+username+password);
+        System.out.println("-------------------------------------" + username + password);
         if (userService.login(username, password)) {
             httpSession.setAttribute("user", userService.getUserByUserName(username));
             map.put("success", true);
