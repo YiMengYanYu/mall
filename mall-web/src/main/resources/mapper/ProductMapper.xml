@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ly.mapper.PropertyMapper">
+    <resultMap id="rep1" type="com.ly.pojo.Property">
+        <id column="propertyId" property="propertyId"></id>
+        <result column="propertyName" property="propertyName"></result>
+        <result column="propertyCategoryId" property="propertyCategoryId"></result>
+        <association property="propertyValueList" javaType="com.ly.pojo.Propertyvalue">
+            <id column="propertyValueId" property="propertyValueId"></id>
+            <result column="propertyValueValue" property="propertyValueValue"></result>
+            <result column="propertyValuePropertyId" property="propertyValuePropertyId"></result>
+            <result column="propertyValueProductId" property="propertyValueProductId"></result>
+        </association>
+    </resultMap>
+    <select id="getPropertyAndPropertyvalue" resultType="Property" resultMap="rep1">
+        SELECT `propertyId`,`propertyName`,`propertyCategoryId`,
+               `propertyValueId`,`propertyValueValue`,`propertyValuePropertyId`,`propertyValueProductId`
+        FROM `property`,`propertyvalue`
+        WHERE `propertyId`=`propertyValuePropertyId` AND propertyValueProductId=#{id}
+    </select>
+
+</mapper>

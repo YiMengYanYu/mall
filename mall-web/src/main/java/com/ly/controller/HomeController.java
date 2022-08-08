@@ -2,10 +2,15 @@ package com.ly.controller;
 
 import com.ly.pojo.Category;
 import com.ly.pojo.Product;
+import com.ly.pojo.Property;
+import com.ly.pojo.Propertyvalue;
 import com.ly.service.CategoryService;
 import com.ly.service.ProductService;
+import com.ly.service.PropertyService;
+import com.ly.service.PropertyvalueService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.ObjectUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -28,8 +33,11 @@ public class HomeController {
 
     @Resource
     private ProductService productService;
-
-    @GetMapping("/")
+    @Resource
+    PropertyvalueService propertyvalueService;
+    @Resource
+    PropertyService propertyService;
+     @GetMapping("/")
     public String home(Model model) {
         model.addAttribute("categoryList", categoryService.getCategoryAllImpl2());
         List<Product> product = productService.getProductIsEnabledEq2();
@@ -52,20 +60,51 @@ public class HomeController {
     }
 
     @GetMapping("/product")
-    public String product(String productName, Model model) {
+    public String product(String productName,String  categoryId, Model model) {
         model.addAttribute("searchValue", productName);
-        model.addAttribute("productList", productService.getProductByProductName(productName));
+        model.addAttribute("searchType",categoryId);
+        if (ObjectUtils.isEmpty(categoryId)){
+            model.addAttribute("productList", productService.getProductByProductName(productName));
+        }else {
+            List<Product> productSoft = productService.getProductSoft(null, null, null, null, true, categoryId);
+            model.addAttribute("productList",productSoft);
+        }
         return "/fore/productListPage";
     }
+
+    @GetMapping("/product/{startIndex}/{endIndex}")
+    public String product(@PathVariable String startIndex, @PathVariable String endIndex, String orderBy, String productName, boolean isDesc,Model model,String categoryId) {
+        List<Product> productSoft;
+        if (!ObjectUtils.isEmpty(categoryId)){
+            productSoft  = productService.getProductSoft(startIndex, endIndex, orderBy, null, isDesc, categoryId);
+
+        }else {
+            productSoft = productService.getProductSoft(startIndex, endIndex, orderBy, productName, isDesc, null);
+        }
+
+        model.addAttribute("productList",productSoft);
+        model.addAttribute("startIndex",startIndex);
+        model.addAttribute("endIndex",endIndex);
+        model.addAttribute("orderBy",orderBy);
+        model.addAttribute("searchType",categoryId);
+        model.addAttribute("productName",productName);
+        model.addAttribute("searchValue",productName);
+        model.addAttribute("isDesc",isDesc);
+        return "/fore/productListPage";
+
+    }
+
+
 
     @GetMapping("/product/{id}")
     public String productDetails(@PathVariable("id") String id, Model model) {
         List<Product> loveProductList = productService.getLoveProductList();
         var productByProductId = productService.getProductByProductId(id);
-        System.out.println(productByProductId);
+        final List<Property> propertyAndPropertyvalue = propertyService.getPropertyAndPropertyvalue(id);
+        model.addAttribute("propertyList", propertyAndPropertyvalue);
+
         model.addAttribute("product", productService.getProductByProductId(id));
         model.addAttribute("loveProductList", loveProductList);
-
         return "/fore/productDetailsPage";
     }
 
@@ -90,6 +129,9 @@ public class HomeController {
         return map;
 
     }
+
+
+
 
 
 }

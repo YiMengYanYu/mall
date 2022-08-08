@@ -116,6 +116,21 @@ public class RedisUtil {
         ValueOperations<String,Object> valueOperations = redisTemplate.opsForValue();
         return (List<T>) valueOperations.get(key);
     }
+    /**
+     * 获得缓存的对象
+     *
+     * @param key 缓存的键值
+     * @return 缓存键值对应的数据
+     */
+    public <T> T getCache(final String key, Class<T> cls) {
+        ValueOperations<String,Object> valueOperations = redisTemplate.opsForValue();
+        System.out.println("测试中----------------------------------------");
+        Object o = valueOperations.get(key);
+        System.out.println(o);
+        T  obj= (T) o;
+        System.out.println(obj.getClass().getSimpleName());
+        return (T) o;
+    }
 
     /**
      * 缓存Set

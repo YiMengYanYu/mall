@@ -75,8 +75,8 @@
         <p class="J_details_list_title">产品参数：</p>
         <ul class="J_details_list_body">
             <c:forEach items="${requestScope.propertyList}" var="property">
-                <c:if test="${property.propertyValueList[0].propertyValueValue != null}">
-                    <li title="${property.propertyValueList[0].propertyValueValue}">${property.propertyName}：${property.propertyValueList[0].propertyValueValue}</li>
+                <c:if test="${property.propertyValueList.propertyValueValue != null}">
+                    <li title="${property.propertyValueList.propertyValueValue}">${property.propertyName}：${property.propertyValueList.propertyValueValue}</li>
                 </c:if>
             </c:forEach>
         </ul>

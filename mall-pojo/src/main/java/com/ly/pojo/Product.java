@@ -49,10 +49,11 @@ public class Product {
      * 评价数量
      */
     @TableField(exist = false)
-    private Long productReviewCount ;
+    private Long productReviewCount;
     /**
      * 表示该属性不为数据库表字段，但又是必须使用的。
      */
     @TableField(exist = false)
     private List<Review> reviewList;
+   
 }

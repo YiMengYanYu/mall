@@ -18,4 +18,5 @@ public interface ProductService {
 
     Product getProductByProductId(String productId);
     List<Product>  getLoveProductList();
+    List<Product> getProductSoft( String startIndex,  String endIndex, String orderBy, String productName, boolean isDesc,String categoryId);
 }

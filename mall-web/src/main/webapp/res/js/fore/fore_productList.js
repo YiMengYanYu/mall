@@ -19,9 +19,9 @@ $(function () {
         }
         //检索
         if ($(this).parent('ul').attr('data-value') === undefined) {
-            location.href = '/product/0/20?orderBy=' + orderBy + "&isDesc=" + isDesc + "&categoryId=" + $(this).parent('ul').attr('data-type');
+            location.href = contextPath+'/product/0/20?orderBy=' + orderBy + "&isDesc=" + isDesc + "&categoryId=" + $(this).parent('ul').attr('data-type');
         } else {
-            location.href = '/product/0/20?orderBy=' + orderBy + "&isDesc=" + isDesc + "&productName=" + $(this).parent('ul').attr('data-value');
+            location.href = contextPath+'/product/0/20?orderBy=' + orderBy + "&isDesc=" + isDesc + "&productName=" + $(this).parent('ul').attr('data-value');
         }
     });
     //点击产品图片时
