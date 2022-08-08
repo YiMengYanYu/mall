@@ -51,6 +51,12 @@ public class HomeController {
         return categoryAll;
     }
 
+    @GetMapping("/product")
+    public String product(String productName,Model model){
+        model.addAttribute("searchValue",productName);
+        model.addAttribute("productList",productService.getProductByProductName(productName));
+        return "/fore/productListPage";
+    }
     @ResponseBody
     @GetMapping("/product/nav/{id}")
     public Map<String, Object> testHomeJson2(@PathVariable String id) {

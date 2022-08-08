@@ -14,4 +14,6 @@ public interface ProductService {
     List<Product> getProductByProductCategoryId(String id);
     List<Product> getProductIsEnabledEq2();
 
+    List<Product> getProductByProductName(String productName);
+
 }

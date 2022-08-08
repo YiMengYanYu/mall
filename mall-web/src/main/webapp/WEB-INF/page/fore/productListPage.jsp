@@ -73,11 +73,11 @@
                         <div class="context_product">
                             <a href="${ctx}/product/${product.productId}"
                                target="_blank"><img class="context_product_imgMain"
-                                                    src="${ctx}/res/images/item/productSinglePicture/${product.singleProductImageList[0].productImageSrc}"/></a>
+                                                    src="${ctx}/res/images/item/productSinglePicture/${product.singleProductImageList[0].productimageSrc}"/></a>
                             <ul class="context_product_imgList">
                                 <c:forEach items="${product.singleProductImageList}" var="img">
                                     <li><img
-                                            src="${ctx}/res/images/item/productSinglePicture/${img.productImageSrc}"/>
+                                            src="${ctx}/res/images/item/productSinglePicture/${img.productimageSrc}"/>
                                     </li>
                                 </c:forEach>
                             </ul>
