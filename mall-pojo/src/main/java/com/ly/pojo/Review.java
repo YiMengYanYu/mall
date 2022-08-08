@@ -1,6 +1,7 @@
 package com.ly.pojo;
 
 
+import com.baomidou.mybatisplus.annotation.TableField;
 import lombok.Data;
 
 @Data
@@ -14,5 +15,7 @@ public class Review {
   private long reviewOrderItemId;
 
 
+  @TableField(exist = false)
+  private  User reviewUser;
 
 }

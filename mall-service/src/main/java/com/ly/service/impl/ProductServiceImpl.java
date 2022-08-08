@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.util.List;
+import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -30,6 +31,8 @@ public class ProductServiceImpl implements ProductService {
     private ProductorderitemMapper productorderitemMapper;
     @Resource
     private ReviewMapper reviewMapper;
+    @Resource
+    private UserMapper userMapper;
 
     @Override
     public List<Product> getProductAll() {
@@ -72,14 +75,14 @@ public class ProductServiceImpl implements ProductService {
         queryWrapper.ne("productIsEnabled", 1);
         queryWrapper.like("productName", productName);
         List<Product> productList = redisUtil.getCacheList("getProductByProductName", Product.class);
-        if (productList==null) {
-            productList= productMapper.selectList(queryWrapper);
+        if (productList == null) {
+            productList = productMapper.selectList(queryWrapper);
             for (Product product : productList) {
-                QueryWrapper<Review> reviewQueryWrapper =new QueryWrapper<>();
-                reviewQueryWrapper.eq("reviewProductId",product.getProductId());
+                QueryWrapper<Review> reviewQueryWrapper = new QueryWrapper<>();
+                reviewQueryWrapper.eq("reviewProductId", product.getProductId());
                 product.setProductReviewCount(reviewMapper.selectCount(reviewQueryWrapper));
                 QueryWrapper<Productorderitem> itemqw = new QueryWrapper<>();
-                itemqw.eq("productorderitemProductId",product.getProductId());
+                itemqw.eq("productorderitemProductId", product.getProductId());
                 product.setProductSaleCount(productorderitemMapper.selectCount(itemqw));
                 QueryWrapper<Category> cqw = new QueryWrapper<>();
                 cqw.eq("categoryId", product.getProductCategoryId());
@@ -95,4 +98,52 @@ public class ProductServiceImpl implements ProductService {
 
         return productList;
     }
+
+    @Override
+    public Product getProductByProductId(String productId) {
+        QueryWrapper<Product> productQueryWrapper = new QueryWrapper<>();
+        productQueryWrapper.eq("productId", productId);
+        Product products = productMapper.selectOne(productQueryWrapper);
+        QueryWrapper<Category> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("categoryId", products.getProductId());
+        QueryWrapper<Review> reviewQueryWrapper = new QueryWrapper<>();
+        reviewQueryWrapper.eq("reviewProductId", products.getProductId());
+        List<Review> reviews = reviewMapper.selectList(reviewQueryWrapper);
+        for (Review review : reviews) {
+            QueryWrapper<User> userQueryWrapper = new QueryWrapper<>();
+            userQueryWrapper.eq("userId", review.getReviewUserId());
+            review.setReviewUser(userMapper.selectOne(userQueryWrapper));
+        }
+        products.setReviewList(reviews);
+        products.setProductReviewCount(reviewMapper.selectCount(new QueryWrapper<Review>().eq("reviewProductId", products.getProductId())));
+        QueryWrapper<Productimage> productimageQueryWrapper = new QueryWrapper<>();
+        productimageQueryWrapper.eq("productimageType", 0);
+        productimageQueryWrapper.eq("productimageProductId", products.getProductId());
+        products.setSingleProductImageList(productimageMapper.selectList(productimageQueryWrapper));
+        products.setDetailProductImageList(productimageMapper.selectList(new QueryWrapper<Productimage>().eq("productimageType", 1).eq("productimageProductId", products.getProductId())));
+        products.setProductCategory(categoryMapper.selectOne(queryWrapper));
+        return products;
+    }
+
+    @Override
+    public List<Product> getLoveProductList() {
+        Long count = productMapper.selectCount(null);
+        QueryWrapper<Product> queryWrapper = new QueryWrapper<>();
+        Random random = new Random();
+        int i = random.nextInt(Math.toIntExact(count) - 4);
+
+        queryWrapper.last("LIMIT " + i + "," + 3);
+        List<Product> products = productMapper.selectList(queryWrapper);
+        for (Product product : products) {
+            QueryWrapper<Productimage> productimageQueryWrapper = new QueryWrapper<>();
+            productimageQueryWrapper.eq("productimageProductId", product.getProductId()).eq("productimageType", 0);
+            List<Productimage> productimages = productimageMapper.selectList(productimageQueryWrapper);
+            System.out.println("------------------------_______________________");
+            System.out.println(productimages);
+            product.setSingleProductImageList(productimages);
+        }
+        return products;
+    }
+
+
 }

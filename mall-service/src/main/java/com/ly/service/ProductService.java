@@ -16,4 +16,6 @@ public interface ProductService {
 
     List<Product> getProductByProductName(String productName);
 
+    Product getProductByProductId(String productId);
+    List<Product>  getLoveProductList();
 }

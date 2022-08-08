@@ -25,6 +25,13 @@ public class Product {
      * 表示该属性不为数据库表字段，但又是必须使用的。
      */
     @TableField(exist = false)
+    private List<Productimage> detailProductImageList;
+
+
+    /**
+     * 表示该属性不为数据库表字段，但又是必须使用的。
+     */
+    @TableField(exist = false)
     private Productimage productimage;
     /**
      * 表示该属性不为数据库表字段，但又是必须使用的。
@@ -33,14 +40,19 @@ public class Product {
     private Category productCategory;
     /**
      * 表示该属性不为数据库表字段，但又是必须使用的。
+     * 产品销售数量
      */
     @TableField(exist = false)
-    private Long productSaleCount=0L;
+    private Long productSaleCount;
+    /**
+     * 表示该属性不为数据库表字段，但又是必须使用的。
+     * 评价数量
+     */
+    @TableField(exist = false)
+    private Long productReviewCount ;
     /**
      * 表示该属性不为数据库表字段，但又是必须使用的。
      */
     @TableField(exist = false)
-    private Long productReviewCount=0L;
-
-
+    private List<Review> reviewList;
 }

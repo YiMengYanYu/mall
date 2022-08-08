@@ -171,17 +171,17 @@ function getGuessLoveProducts() {
     $.ajax({
         type: "GET",
         url: contextPath+"/guess/" + $("#tid").val(),
-        data: {"guessNumber": $("#guessNumber").val()},
         dataType: "json",
         success: function (data) {
             if (data.success) {
-                $("#guessNumber").val(data.guessNumber);
+
                 for (var i = 0; i < data.loveProductList.length; i++) {
-                    var src = data.loveProductList[i].singleProductImageList[0].productImageSrc;
+                    var src = data.loveProductList[i].singleProductImageList[0].productimageSrc;
                     var productId = data.loveProductList[i].productId;
                     var productSalePrice = data.loveProductList[i].productSalePrice;
+                    //c**写这个js的全家爆炸**************
                     $(".context_ul_goodsList").children("ul").append("<li class='context_ul_main'><div class='context_ul_img'>" +
-                        "<a href='/product/" + productId + "'><img src='/res/images/item/productSinglePicture/" + src + "'/></a><p>¥" + productSalePrice + ".00</p></div></li>"
+                        "<a href='"+contextPath+"/product/" + productId + "'><img src="+contextPath+"/res/images/item/productSinglePicture/" + src + "/></a><p>¥" + productSalePrice + ".00</p></div></li>"
                     );
                 }
             }

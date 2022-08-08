@@ -102,18 +102,18 @@
 <div class="context">
     <div class="context_left">
         <div class="context_img_ks">
-            <img src="${ctx}/res/images/item/productSinglePicture/${requestScope.product.singleProductImageList[0].productImageSrc}"
+            <img src="${ctx}/res/images/item/productSinglePicture/${requestScope.product.singleProductImageList[0].productimageSrc}"
                  width="800px" height="800px">
         </div>
         <div class="context_img">
-            <img src="${ctx}/res/images/item/productSinglePicture/${requestScope.product.singleProductImageList[0].productImageSrc}"
+            <img src="${ctx}/res/images/item/productSinglePicture/${requestScope.product.singleProductImageList[0].productimageSrc}"
                  class="context_img_main" width="400px" height="400px"/>
             <div class="context_img_winSelector"></div>
         </div>
         <ul class="context_img_ul">
             <c:forEach var="img" items="${requestScope.product.singleProductImageList}">
                 <li class="context_img_li"><img
-                        src="${ctx}/res/images/item/productSinglePicture/${img.productImageSrc}"/>
+                        src="${ctx}/res/images/item/productSinglePicture/${img.productimageSrc}"/>
                 </li>
             </c:forEach>
         </ul>
@@ -251,14 +251,14 @@
                     <li class="context_ul_main">
                         <div class="context_ul_img">
                             <a href="/mall/product/${product.productId}">
-                                <img src="${ctx}/res/images/item/productSinglePicture/${product.singleProductImageList[0].productImageSrc}">
+                                <img src="${ctx}/res/images/item/productSinglePicture/${product.singleProductImageList[0].productimageSrc}">
                             </a>
                             <p>¥${product.productSalePrice}0</p>
                         </div>
                     </li>
                 </c:forEach>
             </ul>
-            <input type="hidden" id="guessNumber" value="${requestScope.guessNumber}">
+
         </div>
         <ul class="context_ul_trigger">
             <li class="ul_trigger_up"><a href="#"></a></li>
@@ -284,7 +284,7 @@
     </div>
     <div class="J_img">
         <c:forEach items="${requestScope.product.detailProductImageList}" var="image">
-            <img src="${ctx}/res/images/item/productDetailsPicture/${image.productImageSrc}"/>
+            <img src="${ctx}/res/images/item/productDetailsPicture/${image.productimageSrc}"/>
         </c:forEach>
     </div>
 </div>

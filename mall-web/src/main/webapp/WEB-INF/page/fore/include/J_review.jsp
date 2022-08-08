@@ -54,7 +54,7 @@
                         <p>${review.reviewContent}</p>
                     </div>
                     <div class="reviews_date">
-                        <span>${review.reviewCreateDate}</span>
+                        <span>${review.reviewCreatedate}</span>
                     </div>
                 </div>
                 <div class="reviews_author">${review.reviewUser.userNickName}</div>

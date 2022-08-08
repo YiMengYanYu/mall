@@ -52,18 +52,41 @@ public class HomeController {
     }
 
     @GetMapping("/product")
-    public String product(String productName,Model model){
-        model.addAttribute("searchValue",productName);
-        model.addAttribute("productList",productService.getProductByProductName(productName));
+    public String product(String productName, Model model) {
+        model.addAttribute("searchValue", productName);
+        model.addAttribute("productList", productService.getProductByProductName(productName));
         return "/fore/productListPage";
     }
+
+    @GetMapping("/product/{id}")
+    public String productDetails(@PathVariable("id") String id, Model model) {
+        List<Product> loveProductList = productService.getLoveProductList();
+        var productByProductId = productService.getProductByProductId(id);
+        System.out.println(productByProductId);
+        model.addAttribute("product", productService.getProductByProductId(id));
+        model.addAttribute("loveProductList", loveProductList);
+
+        return "/fore/productDetailsPage";
+    }
+
     @ResponseBody
     @GetMapping("/product/nav/{id}")
     public Map<String, Object> testHomeJson2(@PathVariable String id) {
         var plist = productService.getProductByProductCategoryId(id);
         Map<String, Object> map = new HashMap<>(2);
-        map.put("success",true);
-        map.put("category",plist);
+        map.put("success", true);
+        map.put("category", plist);
+        return map;
+
+    }
+
+    @ResponseBody
+    @GetMapping("/guess/{id}")
+    public Map<String, Object> guess(@PathVariable String id) {
+        List<Product> loveProductList = productService.getLoveProductList();
+        Map<String, Object> map = new HashMap<>(2);
+        map.put("success", true);
+        map.put("loveProductList", loveProductList);
         return map;
 
     }
