@@ -52,7 +52,7 @@ $(function () {
     });
 });
 
-function up(obj) {
+function up(obj,id) {
     obj = $(obj);
     var number = obj.next("input");
     var value = parseInt(number.val());
@@ -83,11 +83,27 @@ function up(obj) {
         if (value === 1) {
             obj.addClass("no_minus");
         }
+
+        $(function () {
+
+            $.ajax({
+                url: contextPath+"/orderItem/create/"+id+"?product_number=-1",
+                type: "POST",
+                dataType: "json",
+                error: function () {
+                    alert("购物车产品删除异常，请稍后再试！");
+                    location.href = "/mall/cart";
+                }
+            });
+
+        });
+
         sumPrice();
     }
 }
 
-function down(obj) {
+function down(obj,id) {
+
     obj = $(obj);
     var number = obj.prev("input");
     var value = parseInt(number.val());
@@ -110,6 +126,18 @@ function down(obj) {
         var price_sum = parseFloat(price * value);
         obj.parents("tr").find(".orderItem_product_realPrice").text("￥" + price_sum.toFixed(1));
         number.val(value);
+        $(function () {
+
+            $.ajax({
+                url: contextPath+"/orderItem/create/"+id+"?product_number=1",
+                type: "POST",
+                dataType: "json",
+                error: function () {
+                    alert("购物车产品删除异常，请稍后再试！");
+                    location.href = "/mall/cart";
+                }
+            });
+        });
         sumPrice();
     }
 }

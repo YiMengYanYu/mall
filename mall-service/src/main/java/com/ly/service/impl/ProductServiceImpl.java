@@ -5,6 +5,8 @@ import com.ly.mapper.*;
 import com.ly.pojo.*;
 import com.ly.service.ProductService;
 import com.ly.utils.RedisUtil;
+import org.apache.ibatis.annotations.Insert;
+import org.apache.ibatis.annotations.Select;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ObjectUtils;
 
@@ -34,6 +36,7 @@ public class ProductServiceImpl implements ProductService {
     private ReviewMapper reviewMapper;
     @Resource
     private UserMapper userMapper;
+
 
 
     @Override
@@ -168,7 +171,7 @@ public class ProductServiceImpl implements ProductService {
         QueryWrapper<Product> productQueryWrapper = new QueryWrapper<>();
         productQueryWrapper.eq("productId", productId);
         Product products = productMapper.selectOne(productQueryWrapper);
-        System.out.println("------------------------------------------------------------------------");
+
         final QueryWrapper<Productorderitem> select = new QueryWrapper<Productorderitem>().select(" SELECT(SUM(`productorderitemNumber`))FROM`productorderitem`WHERE`productorderitemProductId`=productId");
 
         products.setProductSaleCount(productorderitemMapper.getProductorderitemSumBypProductorderitemProductId(Long.valueOf(productId)));

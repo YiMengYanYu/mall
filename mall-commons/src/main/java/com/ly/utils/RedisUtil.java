@@ -112,10 +112,11 @@ public class RedisUtil {
      * @param key 缓存的键值
      * @return 缓存键值对应的数据
      */
-    public <T> List<T> getCacheList(final String key,Class<T> cls) {
-        ValueOperations<String,Object> valueOperations = redisTemplate.opsForValue();
+    public <T> List<T> getCacheList(final String key, Class<T> cls) {
+        ValueOperations<String, Object> valueOperations = redisTemplate.opsForValue();
         return (List<T>) valueOperations.get(key);
     }
+
     /**
      * 获得缓存的对象
      *
@@ -123,12 +124,8 @@ public class RedisUtil {
      * @return 缓存键值对应的数据
      */
     public <T> T getCache(final String key, Class<T> cls) {
-        ValueOperations<String,Object> valueOperations = redisTemplate.opsForValue();
-        System.out.println("测试中----------------------------------------");
+        ValueOperations<String, Object> valueOperations = redisTemplate.opsForValue();
         Object o = valueOperations.get(key);
-        System.out.println(o);
-        T  obj= (T) o;
-        System.out.println(obj.getClass().getSimpleName());
         return (T) o;
     }
 
@@ -203,6 +200,16 @@ public class RedisUtil {
         return opsForHash.get(key, hKey);
     }
 
+    /**
+     * 获取Hash中的数据
+     *
+     * @param key  Redis键
+     * @return Hash中的对象
+     */
+    public  Map<String, Long> getCacheHash(final String key) {
+        HashOperations<String, String, Long> opsForHash = redisTemplate.opsForHash();
+        return opsForHash.entries(key);
+    }
     /**
      * 删除Hash中的数据
      *

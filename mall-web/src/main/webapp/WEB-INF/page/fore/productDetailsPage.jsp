@@ -12,7 +12,7 @@
 </head>
 <body>
 <nav>
-    <%@ include file="include/navigator.jsp" %>
+    <%@ include file="include/navigator.jsp"%>
     <div class="header">
         <a href="${ctx}"><img
                 src="${ctx}/res/images/fore/WebsiteImage/tmallLogoD.png"></a>
@@ -183,7 +183,7 @@
                     });
                     //点击加入购物车按钮时
                     $(".context_buyCar_form").submit(function () {
-                        if ('${sessionScope.userId}' === "") {
+                        if ('${sessionScope.user.userId}' === "") {
                             $(".loginModel").show();
                             $(".loginDiv").show();
                             return false;
