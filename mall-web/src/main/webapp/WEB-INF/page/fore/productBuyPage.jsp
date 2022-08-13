@@ -210,7 +210,7 @@
                 }
                 orderItemMap[orderItem_id] = $(this).find(".input_orderItem_number").val();
             });
-            alert(JSON.stringify(orderItemMap));
+
             $.ajax({
                 url: "/mall/order/list",
                 type: "POST",
@@ -230,7 +230,7 @@
                         location.href = "/mall" + data.url;
                         return true;
                     } else {
-                        alert("订单创建失败，请稍后再试！");
+                        alert("订单创建失败了，请稍后再试！");
 
                     }
                 },

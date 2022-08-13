@@ -1,5 +1,6 @@
 package com.ly.service;
 
+import com.ly.vo.OrderVo;
 import com.ly.vo.ShopCar;
 
 import java.util.List;
@@ -16,5 +17,6 @@ public interface CartService {
 
     List<ShopCar> getCartAllByMap(Map<String, Long> map);
 
+    boolean orderList(OrderVo orderVo,Long userId);
 }
 

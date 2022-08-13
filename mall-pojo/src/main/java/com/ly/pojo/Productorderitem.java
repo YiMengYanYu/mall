@@ -1,11 +1,12 @@
 package com.ly.pojo;
 
 
+import com.baomidou.mybatisplus.annotation.TableId;
 import lombok.Data;
 
 @Data
 public class Productorderitem {
-
+  @TableId
   private long productorderitemId;
   private long productorderitemNumber;
   private double productorderitemPrice;

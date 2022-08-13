@@ -1,21 +1,24 @@
 package com.ly.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.ly.mapper.CategoryMapper;
-import com.ly.mapper.ProductMapper;
-import com.ly.mapper.ProductimageMapper;
-import com.ly.pojo.Category;
-import com.ly.pojo.Product;
-import com.ly.pojo.Productimage;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.ly.mapper.*;
+import com.ly.pojo.*;
 import com.ly.service.CartService;
 import com.ly.utils.RedisUtil;
+import com.ly.vo.OrderVo;
 import com.ly.vo.ShopCar;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.ObjectUtils;
 
 import javax.annotation.Resource;
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -25,8 +28,11 @@ import java.util.Map;
  * @Description: TODO
  */
 @Service
+@Transactional
 public class CartServiceImpl implements CartService {
 
+    @Resource
+    private ObjectMapper objectMapper;
 
     @Resource
     private RedisUtil redisUtil;
@@ -39,6 +45,12 @@ public class CartServiceImpl implements CartService {
 
     @Resource
     private ProductimageMapper productimageMapper;
+
+    @Resource
+    private ProductorderMapper productorderMapper;
+
+    @Resource
+    private ProductorderitemMapper productorderitemMapper;
 
     @Override
     public boolean create(String userId, String productId, Long number) {
@@ -83,6 +95,47 @@ public class CartServiceImpl implements CartService {
         return getShopCars(map);
     }
 
+    @Override
+    public boolean orderList(OrderVo orderVo, Long userId) {
+        Productorder productorder = new Productorder();
+        final String yyyyMMddHHmmSSSS = new SimpleDateFormat("yyyyMMddHHmmSSSS").format(new Date());
+        productorder.setProductorderCode(yyyyMMddHHmmSSSS);
+        productorder.setProductorderAddress(orderVo.getDistrictAddressId());
+        productorder.setProductorderDetailAddress(orderVo.getProductOrderDetailAddress());
+        productorder.setProductorderPost(orderVo.getProductOrderPost());
+        productorder.setProductorderMobile(orderVo.getProductOrderMobile());
+        productorder.setProductorderReceiver(orderVo.getProductOrderReceiver());
+        productorder.setProductorderPayDate(new Timestamp(System.currentTimeMillis()));
+        productorder.setProductorderDeliveryDate(new Timestamp(System.currentTimeMillis()));
+        productorder.setProductorderConfirmDate(new Timestamp(System.currentTimeMillis()));
+        productorder.setProductorderUserId(userId);
+        productorderMapper.insert(productorder);
+
+        Map map = null;
+        try {
+            map = objectMapper.readValue(orderVo.getOrderItemJSON(), Map.class);
+        } catch (JsonProcessingException e) {
+            return false;
+  
+        }
+        final List<ShopCar> shopCars = getShopCars(map);
+        for (ShopCar shopCar : shopCars) {
+            Productorderitem productorderitem = new Productorderitem();
+            productorderitem.setProductorderitemUserMessage(null);
+            productorderitem.setProductorderitemNumber(shopCar.getNumber());
+
+            productorderitem.setProductorderitemOrderId(productorder.getProductorderId());//ojbk
+
+            productorderitem.setProductorderitemPrice(shopCar.getProduct().getProductPrice());
+            productorderitem.setProductorderitemUserId(userId);
+            productorderitem.setProductorderitemProductId(shopCar.getProduct().getProductId());//ojbk
+            productorderitemMapper.insert(productorderitem);
+        }
+        redisUtil.deleteObject(userId+"");
+
+        return true;
+    }
+
     @NotNull
     private List<ShopCar> getShopCars(Map<String, Long> map) {
         List<ShopCar> list = new ArrayList<>();
@@ -109,4 +162,6 @@ public class CartServiceImpl implements CartService {
 
         return list;
     }
+
+
 }

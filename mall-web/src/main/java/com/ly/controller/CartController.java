@@ -155,9 +155,19 @@ public class CartController {
 
     }
 
+    @ResponseBody
     @PostMapping("/order/list")
-    public void orderList(OrderVo orderVo) {
+    public Map<String, Object> orderList(OrderVo orderVo, HttpSession httpSession) {
+        User user = (User) httpSession.getAttribute("user");
+        boolean b = cartService.orderList(orderVo, user.getUserId());
+        Map<String, Object> map = new HashMap<>(2);
+        map.put("success", true);
+        map.put("url", "/productPaySuccessPage");
+        return map;
+    }
 
-        System.err.println(orderVo);
+    @GetMapping("/productPaySuccessPage")
+    public String productPaySuccessPage() {
+        return "/fore/productPaySuccessPage";
     }
 }

@@ -38,7 +38,6 @@ public class LoginController {
     @PostMapping("/login/doLogin")
     public Map<String, Boolean> doLogin(String username, String password, HttpSession httpSession) {
         Map<String, Boolean> map = new HashMap<>(2);
-        System.out.println("-------------------------------------" + username + password);
         if (userService.login(username, password)) {
             httpSession.setAttribute("user", userService.getUserByUserName(username));
             map.put("success", true);
