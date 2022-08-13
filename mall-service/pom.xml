@@ -11,6 +11,8 @@
     <version>1.0</version>
     <artifactId>mall-service</artifactId>
     <dependencies>
+
+
         <dependency>
             <groupId>com.ly</groupId>
             <artifactId>mall-mapper</artifactId>

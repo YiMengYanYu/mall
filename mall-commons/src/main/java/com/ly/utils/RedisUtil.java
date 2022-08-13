@@ -16,6 +16,8 @@ import java.util.concurrent.TimeUnit;
 
 @Component
 public class RedisUtil {
+
+
     @Resource
     public RedisTemplate redisTemplate;
 
@@ -201,7 +203,7 @@ public class RedisUtil {
     }
 
     /**
-     * 获取Hash中的数据
+     * 获取Hash中的全部数据
      *
      * @param key  Redis键
      * @return Hash中的对象

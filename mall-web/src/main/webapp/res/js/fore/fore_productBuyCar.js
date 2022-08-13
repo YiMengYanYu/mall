@@ -52,7 +52,7 @@ $(function () {
     });
 });
 
-function up(obj,id) {
+function up(obj, id) {
     obj = $(obj);
     var number = obj.next("input");
     var value = parseInt(number.val());
@@ -87,7 +87,7 @@ function up(obj,id) {
         $(function () {
 
             $.ajax({
-                url: contextPath+"/orderItem/create/"+id+"?product_number=-1",
+                url: contextPath + "/orderItem/create/" + id + "?product_number=-1",
                 type: "POST",
                 dataType: "json",
                 error: function () {
@@ -102,7 +102,7 @@ function up(obj,id) {
     }
 }
 
-function down(obj,id) {
+function down(obj, id) {
 
     obj = $(obj);
     var number = obj.prev("input");
@@ -129,7 +129,7 @@ function down(obj,id) {
         $(function () {
 
             $.ajax({
-                url: contextPath+"/orderItem/create/"+id+"?product_number=1",
+                url: contextPath + "/orderItem/create/" + id + "?product_number=1",
                 type: "POST",
                 dataType: "json",
                 error: function () {
@@ -178,11 +178,11 @@ function create(obj) {
         traditional: true,
         success: function (data) {
             if (data.success) {
-                location.href = contextPath + "/order/create/byCart?order_item_list=" + data.orderItemIDArray;
+                location.href = encodeURI(contextPath + "/order/create/byCart?order_item_list=" + data.orderItemIDArray);
                 return true;
             } else {
                 alert("购物车商品结算异常，请稍候再试！");
-                location.href = "/cart";
+                location.href = contextPath + "/cart";
             }
         },
         beforeSend: function () {

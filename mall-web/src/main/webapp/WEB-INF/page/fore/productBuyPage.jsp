@@ -68,6 +68,7 @@
                         <c:if test="${requestScope.districtAddressId==address.addressAreaId}">selected</c:if>>${address.addressName}</option>
             </c:forEach>
         </select>
+
         <div class="br"></div>
         <label for="textarea_details_address" id="label_details_address">详细地址</label><span class="mustValue">*</span>
         <textarea id="textarea_details_address">${requestScope.detailsAddress}</textarea>
@@ -81,6 +82,7 @@
         <label for="input_order_phone" id="label_order_phone">手机号码</label><span class="mustValue">*</span>
         <input id="input_order_phone" type="text" value="${requestScope.order_phone}" maxlength="11"/>
     </div>
+
     <div class="order_info">
         <h2>确认订单信息</h2>
         <table class="table_order_orderItem">
@@ -93,10 +95,10 @@
             </tr>
             </thead>
             <tbody>
-            <c:forEach items="${requestScope.orderItemList}" var="orderItem" varStatus="i">
+            <c:forEach items="${requestScope.shopCarList}" var="shopCar" varStatus="i">
                 <tr class="tr_shop">
                     <td><span class="span_shopTitle">店铺：</span><span
-                            class="span_shopName">贤趣${orderItem.productOrderItemProduct.productCategory.categoryName}旗舰店</span>
+                            class="category_shop">店铺：贤趣${shopCar.category.categoryName}旗舰店</span>
                     </td>
                     <td></td>
                     <td></td>
@@ -104,15 +106,17 @@
                 </tr>
                 <tr class="tr_product_info">
                     <td><img
-                            src="${ctx}/res/images/item/productSinglePicture/${orderItem.productOrderItemProduct.singleProductImageList[0].productImageSrc}"
+                            src="${ctx}/res/images/item/productSinglePicture/${shopCar.product.singleProductImageList[0].productimageSrc}"
                             style="width: 50px;height: 50px;"/><span class="span_product_name"><a
-                            href="${ctx}/product/${orderItem.productOrderItemProduct.productId}">${orderItem.productOrderItemProduct.productName}</a></span>
+                            href="${ctx}/product/${shopCar.product.productId}">${shopCar.product.productName}</a></span>
                     </td>
                     <td><span
-                            class="span_product_sale_price">${orderItem.productOrderItemProduct.productSalePrice}0</span>
+                            class="span_product_sale_price">${shopCar.product.productPrice}0</span>
                     </td>
-                    <td><span class="span_productOrderItem_number">${orderItem.productOrderItemNumber}</span></td>
-                    <td><span class="span_productOrderItem_price">${orderItem.productOrderItemPrice}0</span></td>
+                    <td><span class="span_productOrderItem_number">${shopCar.number}</span></td>
+                    <td><span
+                            class="span_productOrderItem_price">${(shopCar.product.productPrice*100)*shopCar.number/100}0</span>
+                    </td>
                 </tr>
                 <tr class="tr_userMessage">
                     <td><label for="input_userMessage_${i.count}">给卖家留言：</label><textarea maxlength="500"
@@ -122,15 +126,23 @@
                     </td>
                     <td></td>
                     <td></td>
-                    <td colspan="4"><input type="hidden" class="input_orderItem_id"
-                                           value="${orderItem.productOrderItemId}"/>
+                    <td colspan="4">
+                            <%-- 商品id--%>
+                        <input type="hidden" class="input_orderItem_id"
+                                           value="${shopCar.product.productId}"/>
+                                    <%-- 数量--%>
+                        <input type="hidden" class="input_orderItem_number"
+                               value="${shopCar.number}"/>
                 </tr>
                 <tr class="tr_orderCount">
                     <td colspan="3"></td>
                     <td><span class="span_price_name">店铺合计(含运费)</span><span
-                            class="span_price_value">￥${orderItem.productOrderItemPrice}0</span></td>
+                            class="span_price_value">￥${(shopCar.product.productPrice*100)*shopCar.number/100}0</span>
+                    </td>
                 </tr>
             </c:forEach>
+
+
             </tbody>
         </table>
     </div>
@@ -139,7 +151,7 @@
             <div class="order_count_div_content">
                 <h1 class="order_count_div_price">
                     <span class="order-title">实付款：</span><span class="realPay-price_unit">￥</span><span
-                        class="realPay-price">${requestScope.orderTotalPrice}0</span>
+                        class="realPay-price">${orderTotalPrice}0</span>
                 </h1>
                 <h1 class="order_count_div_address">
                     <span class="order-title">寄送至：</span><span class="order-value address_province"></span><span
@@ -155,74 +167,7 @@
         </div>
     </div>
     <script>
-        function payOne() {
-            var addressId = $("#select_order_address_province").val();
-            var cityAddressId = $("#select_order_address_city").val();
-            var districtAddressId = $("#select_order_address_district").val();
-            var productOrderDetailAddress = $.trim($("#textarea_details_address").val());
-            var productOrderPost = $.trim($("#input_order_post").val());
-            var productOrderReceiver = $.trim($("#input_order_receiver").val());
-            var productOrderMobile = $.trim($("#input_order_phone").val());
-            var userMessage = $.trim($("#input_userMessage_1").val());
-            var orderItem_product_id = parseInt('${requestScope.orderItemList[0].productOrderItemProduct.productId}');
-            var orderItem_number = parseInt('${requestScope.orderItemList[0].productOrderItemNumber}');
-debugger;
-            var yn = true;
-            if (productOrderDetailAddress === "") {
-                styleUtil.specialBasicErrorShow($("#label_details_address"));
-                yn = false;
-            }
-            if (productOrderReceiver === "") {
-                styleUtil.specialBasicErrorShow($("#label_order_receiver"));
-                yn = false;
-            }
-            var re = /^(13[0-9]{9})|(15[89][0-9]{8})|(17[678][0-9]{8})|(199[0-9]{8})$/;
-            if (!re.test(productOrderMobile)) {
-                styleUtil.specialBasicErrorShow($("#label_order_phone"));
-                yn = false;
-            }
-            re = /^[1-9][0-9]{5}$/;
-            if (!re.test(productOrderPost) && productOrderPost !== "") {
-                styleUtil.specialBasicErrorShow($("#label_order_post"));
-                yn = false;
-            }
-            if (!yn) {
-                window.scrollTo(0, 0);
-                return false;
-            }
-            $.ajax({
-                url: "/mall/order",
-                type: "POST",
-                data: {
-                    "addressId": addressId,
-                    "cityAddressId": cityAddressId,
-                    "districtAddressId": districtAddressId,
-                    "productOrderDetailAddress": productOrderDetailAddress,
-                    "productOrderPost": productOrderPost,
-                    "productOrderReceiver": productOrderReceiver,
-                    "productOrderMobile": productOrderMobile,
-                    "userMessage": userMessage,
-                    "orderItem_product_id": orderItem_product_id,
-                    "orderItem_number": orderItem_number
-                },
-                dataType: "json",
-                success: function (data) {
-                    if (data.success) {
-                        location.href = "/mall" + data.url;
-                    } else {
-                        alert("订单创建失败，请稍后再试！");
-                        location.reload(true);
-                    }
-                },
-                beforeSend: function () {
 
-                },
-                error: function () {
-                    alert("订单提交出现问题，请重新提交！");
-                    location.reload(true);
-                }
-            });
-        }
 
         function payList() {
             var addressId = $("#select_order_address_province").val();
@@ -232,7 +177,7 @@ debugger;
             var productOrderPost = $.trim($("#input_order_post").val());
             var productOrderReceiver = $.trim($("#input_order_receiver").val());
             var productOrderMobile = $.trim($("#input_order_phone").val());
-            debugger;
+
             var yn = true;
             if (productOrderDetailAddress === "") {
                 styleUtil.specialBasicErrorShow($("#label_details_address"));
@@ -261,11 +206,11 @@ debugger;
             tr.each(function () {
                 var orderItem_id = $(this).find(".input_orderItem_id").val();
                 if (isNaN(orderItem_id) || orderItem_id === "") {
-                    location.reload(true);
                     return false;
                 }
-                orderItemMap[orderItem_id] = $(this).find(".input_userMessage").val();
+                orderItemMap[orderItem_id] = $(this).find(".input_orderItem_number").val();
             });
+            alert(JSON.stringify(orderItemMap));
             $.ajax({
                 url: "/mall/order/list",
                 type: "POST",
@@ -286,27 +231,20 @@ debugger;
                         return true;
                     } else {
                         alert("订单创建失败，请稍后再试！");
-                        location.reload(true);
+
                     }
                 },
                 beforeSend: function () {
                 },
                 error: function () {
                     alert("订单创建失败，请稍后再试！");
-                    location.reload(true);
+
                 }
             });
         }
     </script>
     <div class="order_info_last">
-        <c:choose>
-            <c:when test="${requestScope.orderItemList[0].productOrderItemId != null}">
-                <a href="javascript:void(0)" title="提交订单" class="go-btn" onclick="payList()">提交订单</a>
-            </c:when>
-            <c:otherwise>
-                <a href="javascript:void(0)" title="提交订单" class="go-btn" onclick="payOne()">提交订单</a>
-            </c:otherwise>
-        </c:choose>
+        <a href="javascript:void(0)" title="提交订单" class="go-btn" onclick="payList()">提交订单</a>
     </div>
 </div>
 <%@include file="include/footer_two.jsp" %>

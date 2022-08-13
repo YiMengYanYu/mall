@@ -10,6 +10,7 @@ import com.ly.pojo.Productimage;
 import com.ly.service.CartService;
 import com.ly.utils.RedisUtil;
 import com.ly.vo.ShopCar;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ObjectUtils;
 
@@ -64,26 +65,7 @@ public class CartServiceImpl implements CartService {
     @Override
     public List<ShopCar> cart(Long userId) {
         Map<String, Long> cacheHash = redisUtil.getCacheHash(userId + "");
-
-        List<ShopCar> list = new ArrayList<>();
-        for (Map.Entry<String, Long> stringObjectEntry : cacheHash.entrySet()) {
-            ShopCar shopCar = new ShopCar();
-            QueryWrapper<Product> productQueryWrapper = new QueryWrapper<>();
-            productQueryWrapper.eq("productId", stringObjectEntry.getKey());
-            final Product product = productMapper.selectOne(productQueryWrapper);
-
-            QueryWrapper<Productimage> productimageQueryWrapper = new QueryWrapper<>();
-            productimageQueryWrapper.eq("productimageProductId", product.getProductId());
-
-            product.setSingleProductImageList(productimageMapper.selectList(productimageQueryWrapper));
-            shopCar.setProduct(product);
-            QueryWrapper<Category> categoryQueryWrapper = new QueryWrapper<>();
-            categoryQueryWrapper.eq("categoryId", product.getProductCategoryId());
-            shopCar.setCategory(categoryMapper.selectOne(categoryQueryWrapper));
-            shopCar.setNumber(stringObjectEntry.getValue());
-            list.add(shopCar);
-        }
-        return list;
+        return getShopCars(cacheHash);
     }
 
     @Override
@@ -94,5 +76,37 @@ public class CartServiceImpl implements CartService {
             return false;
         }
         return true;
+    }
+
+    @Override
+    public List<ShopCar> getCartAllByMap(Map<String, Long> map) {
+        return getShopCars(map);
+    }
+
+    @NotNull
+    private List<ShopCar> getShopCars(Map<String, Long> map) {
+        List<ShopCar> list = new ArrayList<>();
+        for (Map.Entry<String, Long> mn : map.entrySet()) {
+            ShopCar shopCar = new ShopCar();
+            QueryWrapper<Product> productQueryWrapper = new QueryWrapper<>();
+            productQueryWrapper.eq("productId", mn.getKey());
+            final Product product = productMapper.selectOne(productQueryWrapper);
+
+            QueryWrapper<Productimage> productimageQueryWrapper = new QueryWrapper<>();
+            productimageQueryWrapper.eq("productimageProductId", product.getProductId());
+            productimageQueryWrapper.eq("productimageType", 0);
+
+            product.setSingleProductImageList(productimageMapper.selectList(productimageQueryWrapper));
+            shopCar.setProduct(product);
+            QueryWrapper<Category> categoryQueryWrapper = new QueryWrapper<>();
+            categoryQueryWrapper.eq("categoryId", product.getProductCategoryId());
+            shopCar.setCategory(categoryMapper.selectOne(categoryQueryWrapper));
+
+            shopCar.setNumber(Long.parseLong(String.valueOf(mn.getValue())));
+            list.add(shopCar);
+
+        }
+
+        return list;
     }
 }
