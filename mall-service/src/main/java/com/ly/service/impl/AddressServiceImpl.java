@@ -37,4 +37,11 @@ public class AddressServiceImpl implements AddressService {
 
         return addresses;
     }
+
+    @Override
+    public String getParentByaddressAreaId(String addressAreaId) {
+        Address address = addressMapper.selectById(addressAreaId);
+        String addressRegionId = address.getAddressRegionId();
+        return addressRegionId;
+    }
 }

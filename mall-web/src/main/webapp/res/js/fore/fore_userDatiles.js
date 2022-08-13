@@ -116,7 +116,7 @@ $(function () {
     //非空验证
     $("#register_sub").click(function () {
         //真实姓名
-        var userRealName = $.trim($("input[name=userRealName]").val());
+        var userRealName = $.trim($("input[name=userRealname]").val());
         //密码
         var userPassword = $.trim($("input[name=userPassword]").val());
         //确认密码
@@ -191,7 +191,7 @@ function uploadImage(fileDom) {
         mimeType: "multipart/form-data",
         success: function (data) {
             if (data.success) {
-                $(fileDom).prev("img").attr("src","/res/images/item/userProfilePicture/"+data.fileName);
+                $(fileDom).prev("img").attr("src",contextPath+"/res/images/item/userProfilePicture/"+data.fileName);
                 $("#user_profile_picture_src_value").val(data.fileName);
             } else {
                 alert("图片上传异常！");

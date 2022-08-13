@@ -87,7 +87,7 @@
                 </div>
                 <div class="form-item">
                     <label class="form-label tsl">真实姓名：</label>
-                    <input name="userRealName" value="${requestScope.user.userRealName}" id="userRealName"
+                    <input name="userRealname" value="${requestScope.user.userRealname}" id="userRealName"
                            class="form-text err-input" maxlength="20">
                     <span class="form_span"></span>
                 </div>

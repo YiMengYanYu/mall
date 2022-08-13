@@ -10,6 +10,7 @@ import java.util.List;
  */
 public interface AddressService {
 
-   List<Address> getAddressByaddressRegionId(String id);
+    List<Address> getAddressByaddressRegionId(String id);
 
+    String getParentByaddressAreaId(String addressAreaId);
 }

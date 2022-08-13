@@ -62,4 +62,30 @@ public class UserServiceImpl implements UserService {
         var encrypt = CodecUtil.md5Hex(password, user.getSalt());
         return encrypt.equals(user.getUserPassword());
     }
+
+    @Override
+    public boolean update(User user) {
+        String salt = CodecUtil.generateSalt();
+        user.setUserPassword(CodecUtil.md5Hex(user.getUserPassword(), salt));
+        user.setSalt(salt);
+        if (userMapper.updateById(user) > 0) {
+            return true;
+        }
+        return false;
+    }
+
+    @Override
+    public boolean updateImg(User user) {
+        if (userMapper.updateById(user) > 0) {
+            return true;
+        }
+        return false;
+    }
+
+    @Override
+    public User getUserById(Long userId) {
+
+        return userMapper.selectById(userId);
+
+    }
 }

@@ -8,6 +8,8 @@ public interface UserService {
     User getUserByUserName(String userName);
 
     Boolean login(String username, String password);
+    boolean update(User user);
+    boolean updateImg(User user);
 
-
+    User getUserById(Long userId);
 }
