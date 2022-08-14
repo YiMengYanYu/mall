@@ -12,4 +12,6 @@ public interface UserService {
     boolean updateImg(User user);
 
     User getUserById(Long userId);
+
+    Long getUserCount();
 }

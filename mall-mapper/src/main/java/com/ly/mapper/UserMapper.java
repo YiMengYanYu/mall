@@ -9,4 +9,6 @@ import com.ly.pojo.User;
  * @Description: TODO
  */
 public interface UserMapper extends BaseMapper<User> {
+
+    Long getUserCount();
 }

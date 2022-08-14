@@ -11,12 +11,18 @@ import java.util.List;
  */
 public interface ProductService {
     List<Product> getProductAll();
+
     List<Product> getProductByProductCategoryId(String id);
+
     List<Product> getProductIsEnabledEq2();
 
     List<Product> getProductByProductName(String productName);
 
     Product getProductByProductId(String productId);
-    List<Product>  getLoveProductList();
-    List<Product> getProductSoft( String startIndex,  String endIndex, String orderBy, String productName, boolean isDesc,String categoryId);
+
+    List<Product> getLoveProductList();
+
+    List<Product> getProductSoft(String startIndex, String endIndex, String orderBy, String productName, boolean isDesc, String categoryId);
+
+    Long getProductCount();
 }

@@ -88,4 +88,9 @@ public class UserServiceImpl implements UserService {
         return userMapper.selectById(userId);
 
     }
+
+    @Override
+    public Long getUserCount() {
+        return userMapper.getUserCount();
+    }
 }

@@ -8,5 +8,8 @@ import com.ly.pojo.Product;
  * @DateTime: 2022/8/5 18:26
  * @Description: TODO
  */
-public interface ProductMapper  extends BaseMapper<Product> {
+public interface ProductMapper extends BaseMapper<Product> {
+
+
+    Long getProductCount();
 }

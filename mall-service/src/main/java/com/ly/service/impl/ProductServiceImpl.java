@@ -165,6 +165,11 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
+    public Long getProductCount() {
+        return productMapper.getProductCount();
+    }
+
+    @Override
     public Product getProductByProductId(String productId) {
         //Product products  = redisUtil.getCache("getProductByProductId", Product.class);
         // if (products==null) {

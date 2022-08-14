@@ -1,6 +1,8 @@
 package com.ly.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.ly.pojo.Admin;
+import org.apache.ibatis.annotations.Param;
 
 /**
  * @author YiMeng
@@ -8,4 +10,8 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  * @Description: TODO
  */
 public interface AdminMapper extends BaseMapper<AdminMapper> {
+
+
+    public Admin getAdminByUserName(@Param("userName") String userName);
+
 }

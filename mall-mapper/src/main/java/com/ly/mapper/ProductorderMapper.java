@@ -9,4 +9,6 @@ import com.ly.pojo.Productorder;
  * @Description: TODO
  */
 public interface ProductorderMapper extends BaseMapper<Productorder> {
+
+    Long getProductorderCount();
 }

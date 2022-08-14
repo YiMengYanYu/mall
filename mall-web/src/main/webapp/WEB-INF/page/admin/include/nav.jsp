@@ -6,12 +6,12 @@
     </svg>
     <span id="txt_home_title" class="nav_text">Mall商城管理后台</span>
     <i id="i_nickname_slide"></i>
-    <span id="txt_home_nickname"><c:choose><c:when test="${requestScope.admin.adminNickName != ''}">${requestScope.admin.adminNickName}</c:when><c:otherwise>${requestScope.admin.adminName}</c:otherwise></c:choose></span>
+    <span id="txt_home_nickname"><c:choose><c:when test="${admin.adminNickname != ''}">${admin.adminNickname}</c:when><c:otherwise>${admin.adminName}</c:otherwise></c:choose></span>
     <img id="img_home_profile_picture"
-         src="${ctx}/res/images/item/adminProfilePicture/${requestScope.admin.adminProfilePictureSrc}"
+         src="${ctx}/res/images/item/adminProfilePicture/${admin.adminProfilePictureSrc}"
          onerror="this.src='${ctx}/res/images/admin/homePage/default_profile_picture-32x32.png'"
          alt="头像" title="头像" width="32px" height="32px">
-    <input id="adminId" type="hidden" value="${requestScope.admin.adminId}"/>
+    <input id="adminId" type="hidden" value="${admin.adminId}"/>
     <ul id="nav_tools">
         <li id="nav_tools_admin_manage">账号管理</li>
         <li id="nav_tools_admin_logout">注销</li>
