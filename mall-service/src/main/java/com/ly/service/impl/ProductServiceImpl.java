@@ -1,12 +1,13 @@
 package com.ly.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.ly.mapper.*;
 import com.ly.pojo.*;
 import com.ly.service.ProductService;
+import com.ly.utils.PageUtil;
 import com.ly.utils.RedisUtil;
-import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.Select;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ObjectUtils;
 
@@ -36,7 +37,6 @@ public class ProductServiceImpl implements ProductService {
     private ReviewMapper reviewMapper;
     @Resource
     private UserMapper userMapper;
-
 
 
     @Override
@@ -108,7 +108,7 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public List<Product> getProductSoft(String startIndex, String endIndex, String orderBy, String productName, boolean isDesc, String categoryId) {
 
-        List<Product> productList = redisUtil.getCacheList("getProductSoft" + productName + categoryId + orderBy + startIndex + endIndex+isDesc, Product.class);
+        List<Product> productList = redisUtil.getCacheList("getProductSoft" + productName + categoryId + orderBy + startIndex + endIndex + isDesc, Product.class);
         if (productList == null) {
 
             QueryWrapper<Product> queryWrapper = new QueryWrapper<>();
@@ -158,7 +158,7 @@ public class ProductServiceImpl implements ProductService {
                 qw.eq("productimageType", 0);
                 product.setSingleProductImageList(productimageMapper.selectList(qw));
             }
-            redisUtil.setCacheObject("getProductSoft" + productName + categoryId + orderBy + startIndex + endIndex+isDesc, productList, 60, TimeUnit.SECONDS);
+            redisUtil.setCacheObject("getProductSoft" + productName + categoryId + orderBy + startIndex + endIndex + isDesc, productList, 60, TimeUnit.SECONDS);
         }
 
         return productList;
@@ -167,6 +167,20 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public Long getProductCount() {
         return productMapper.getProductCount();
+    }
+
+    @Override
+    public PageUtil<Product> getProduct(String productName, Integer categoryId, Integer productSalePrice, Integer productPrice, Integer[] productIsEnabledArray, String orderBy, Boolean isDesc, Integer startIndex, Integer pageSize) {
+        PageHelper.startPage(startIndex + 1, pageSize);
+        List<Product> product = productMapper.getProduct(productName, categoryId, productSalePrice, productPrice, productIsEnabledArray, orderBy, isDesc);
+        PageInfo pageInfo = new PageInfo(product);
+        PageUtil<Product> pageUtil =new PageUtil<>();
+        pageUtil.setList(product);
+        pageUtil.setIndex(startIndex);
+        pageUtil.setTotalPage(pageInfo.getPages());
+        pageUtil.setHasPrev(pageInfo.isHasPreviousPage());
+        pageUtil.setHasNext(pageInfo.isHasNextPage());
+        return pageUtil;
     }
 
     @Override

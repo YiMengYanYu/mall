@@ -10,5 +10,5 @@ import com.ly.pojo.Admin;
 public interface AdminService {
 
 
-    public Admin getAdminByUserName(String userName);
+    Admin getAdminByUserName(String userName);
 }

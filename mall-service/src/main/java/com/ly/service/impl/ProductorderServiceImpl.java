@@ -1,7 +1,6 @@
 package com.ly.service.impl;
 
 import com.ly.mapper.ProductorderMapper;
-import com.ly.mapper.PropertyMapper;
 import com.ly.service.ProductorderService;
 import org.springframework.stereotype.Service;
 

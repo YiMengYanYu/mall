@@ -1,6 +1,7 @@
 package com.ly.service;
 
 import com.ly.pojo.Product;
+import com.ly.utils.PageUtil;
 
 import java.util.List;
 
@@ -25,4 +26,7 @@ public interface ProductService {
     List<Product> getProductSoft(String startIndex, String endIndex, String orderBy, String productName, boolean isDesc, String categoryId);
 
     Long getProductCount();
+
+    PageUtil<Product> getProduct(String productName, Integer categoryId, Integer productSalePrice, Integer productPrice, Integer[] productIsEnabledArray, String orderBy, Boolean isDesc, Integer startIndex, Integer pageSize);
+
 }

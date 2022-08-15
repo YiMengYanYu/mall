@@ -25,6 +25,7 @@ public class AdminLoginController {
     @Resource
     private AdminService adminService;
 
+
     /**
      * 跳转到login页面
      *
@@ -32,6 +33,7 @@ public class AdminLoginController {
      */
     @GetMapping("/admin/login")
     public String loginPage() {
+
         return "/admin/loginPage";
     }
 

@@ -7,8 +7,8 @@ package com.ly.utils;
  */
 public class PasswordUtils {
 
-    private static int oddValueAdded=1;
-    private static int evenValueAdded=-1;
+    private static final int oddValueAdded=1;
+    private static final int evenValueAdded=-1;
 
 
     /**

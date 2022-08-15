@@ -17,8 +17,8 @@
         </li>
 
         <c:forEach begin="1" end="${requestScope.pageUtil.getTotalPage()}" varStatus="status">
-            <c:if test="${status.count-requestScope.pageUtil.index>=-5 && status.count-requestScope.pageUtil.index<=5}">
-                <li <c:if test="${status.count==requestScope.pageUtil.index+1}"> class="pageThis" </c:if>>
+            <c:if test="${status.count-requestScope.pageUtil.getIndex()>=-5 && status.count-requestScope.pageUtil.getIndex()<=5}">
+                <li <c:if test="${status.count==requestScope.pageUtil.getIndex()+1}"> class="pageThis" </c:if>>
                     <a href="javascript:void(0)" onclick="getPage(${status.count-1})">${status.count}</a>
                 </li>
             </c:if>

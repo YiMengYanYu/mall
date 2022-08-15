@@ -2,7 +2,6 @@ package com.ly.service.impl;
 
 import com.ly.mapper.PropertyMapper;
 import com.ly.pojo.Property;
-import com.ly.pojo.Propertyvalue;
 import com.ly.service.PropertyService;
 import org.springframework.stereotype.Service;
 

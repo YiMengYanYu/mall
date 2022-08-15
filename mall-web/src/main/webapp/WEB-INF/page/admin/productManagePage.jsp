@@ -108,13 +108,13 @@
                     $(".loader").css("display","none");
                     object.attr("disabled",false);
                     //显示产品统计数据
-                    $("#product_count_data").text(data.productCount);
-                    if (data.productList.length > 0) {
-                        for (var i = 0; i < data.productList.length; i++) {
+                    $("#product_count_data").text(data.pageUtil.list.length);
+                    if (data.pageUtil.list.length > 0) {
+                        for (var i = 0; i < data.pageUtil.list.length; i++) {
                             var isEnabledClass;
                             var isEnabledTitle;
                             var isEnabled;
-                            switch (data.productList[i].productIsEnabled) {
+                            switch (data.pageUtil.list[i].productIsEnabled) {
                                 case 0:
                                     isEnabledClass = "td_success";
                                     isEnabledTitle = "产品正常销售中";
@@ -131,12 +131,12 @@
                                     isEnabled = "停售中";
                                     break;
                             }
-                            var productPrice = data.productList[i].productPrice.toFixed(1);
-                            var productSalePrice = data.productList[i].productSalePrice.toFixed(1);
-                            var productId = data.productList[i].productId;
-                            var productName = data.productList[i].productName;
-                            var productTitle = data.productList[i].productTitle;
-                            var productCreateDate = data.productList[i].productCreateDate;
+                            var productPrice = data.pageUtil.list[i].productPrice.toFixed(1);
+                            var productSalePrice = data.pageUtil.list[i].productSalePrice.toFixed(1);
+                            var productId = data.pageUtil.list[i].productId;
+                            var productName = data.pageUtil.list[i].productName;
+                            var productTitle = data.pageUtil.list[i].productTitle;
+                            var productCreateDate = data.pageUtil.list[i].productCreateDate;
                             //显示产品数据
                             tbody.append("<tr><td><input type='checkbox' class='cbx_select' id='cbx_product_select_" + productId + "'><label for='cbx_product_select_" + productId + "'></label></td><td title='"+productName+"'>" + productName + "</td><td title='"+productTitle+"'>" + productTitle + "</td><td title='"+productPrice+"'>" + productPrice + "</td><td title='"+productSalePrice+"'>" + productSalePrice + "</td><td title='"+productCreateDate+"'>" + productCreateDate + "</td><td><span class='" + isEnabledClass + "' title='"+isEnabledTitle+"'>"+ isEnabled + "</span></td><td><span class='td_special' title='查看产品详情'><a href='javascript:void(0);' onclick='getChildPage(this)'>详情</a></span></td><td hidden><span class='productId'>" + productId + "</span></td></tr>");
                         }
@@ -149,7 +149,7 @@
                             index: data.pageUtil.index,
                             count: data.pageUtil.count,
                             total: data.pageUtil.total,
-                            totalPage: data.totalPage
+                            totalPage: data.pageUtil.totalPage
                         };
                         createPageDiv($(".loader"), pageUtil);
                     }
@@ -207,7 +207,7 @@
         <label class="frm_label" id="lbl_product_category_id" for="select_product_category">产品类型</label>
         <select class="selectpicker" id="select_product_category" data-size="8">
             <option value="0">全部</option>
-            <c:forEach items="${requestScope.categoryList}" var="category">
+            <c:forEach items="${applicationScope.categoryList}" var="category">
                 <option value="${category.categoryId}">${category.categoryName}</option>
             </c:forEach>
         </select>

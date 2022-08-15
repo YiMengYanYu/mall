@@ -5,9 +5,61 @@
 
 <mapper namespace="com.ly.mapper.ProductMapper">
 
-
+    <sql id="selectProduct">
+        SELECT `productId`,
+               `productName`,
+               `productTitle`,
+               `productPrice`,
+               `productSalePrice`,
+               `productCreateDate`,
+               `productCategoryId`,
+               `productIsEnabled`
+        FROM `product`
+    </sql>
 
     <select id="getProductCount" resultType="Long">
-        SELECT COUNT(1) FROM `product`
+        SELECT COUNT(1)
+        FROM `product`
+    </select>
+
+    <select id="getProduct" resultType="Product">
+        <include refid="selectProduct"/>
+        <where>
+            <if test="productName!=null and productName!=''">
+                and `productName` like CONCAT('%',#{productName},'%');
+            </if>
+
+            <if test="categoryId!=null and categoryId!=0">
+                and `productCategoryId` like CONCAT('%',#{categoryId},'%');
+            </if>
+
+            <if test="productSalePrice!=null">
+                and `productSalePrice` like CONCAT('%',#{productSalePrice},'%');
+            </if>
+            <if test="productPrice!=null">
+                and `productPrice` like CONCAT('%',#{productPrice},'%');
+            </if>
+
+            <if test="productPrice!=null">
+                and `productPrice` like CONCAT('%',#{productPrice},'%');
+            </if>
+
+            <if test="productPrice!=null">
+                and `productPrice` like CONCAT('%',#{productPrice},'%');
+            </if>
+
+            <if test="productIsEnabledArray !=null">
+                and productIsEnabled IN
+                <foreach collection="productIsEnabledArray" item="item" index="index" open="(" separator="," close=")">
+                    #{item}
+                </foreach>
+            </if>
+        </where>
+        <if test="orderBy!=null and orderBy!=''">
+            order by ${orderBy}
+            <if test="isDesc">
+                DESC
+            </if>
+        </if>
     </select>
 </mapper>

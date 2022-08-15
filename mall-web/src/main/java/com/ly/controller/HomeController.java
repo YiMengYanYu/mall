@@ -3,7 +3,6 @@ package com.ly.controller;
 import com.ly.pojo.Category;
 import com.ly.pojo.Product;
 import com.ly.pojo.Property;
-import com.ly.pojo.Propertyvalue;
 import com.ly.service.CategoryService;
 import com.ly.service.ProductService;
 import com.ly.service.PropertyService;

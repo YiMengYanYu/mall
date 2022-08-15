@@ -37,3 +37,7 @@ mybatis-plus:
     db-config:
       table-prefix:  #表前缀
       id-type: auto            #设置id的自增策略默认是使用雪花算法
+pagehelper:
+  helperDialect: mysql
+  reasonable: true
+  autoRuntimeDialect: true
