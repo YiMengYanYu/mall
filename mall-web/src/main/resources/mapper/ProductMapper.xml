@@ -26,26 +26,16 @@
         <include refid="selectProduct"/>
         <where>
             <if test="productName!=null and productName!=''">
-                and `productName` like CONCAT('%',#{productName},'%');
+                and `productName` like CONCAT('%',#{productName},'%')
             </if>
-
             <if test="categoryId!=null and categoryId!=0">
-                and `productCategoryId` like CONCAT('%',#{categoryId},'%');
+                and `productCategoryId` =#{categoryId}
             </if>
-
             <if test="productSalePrice!=null">
-                and `productSalePrice` like CONCAT('%',#{productSalePrice},'%');
+                and `productSalePrice`&gt;=#{productSalePrice}
             </if>
             <if test="productPrice!=null">
-                and `productPrice` like CONCAT('%',#{productPrice},'%');
-            </if>
-
-            <if test="productPrice!=null">
-                and `productPrice` like CONCAT('%',#{productPrice},'%');
-            </if>
-
-            <if test="productPrice!=null">
-                and `productPrice` like CONCAT('%',#{productPrice},'%');
+                and `productPrice` &lt;=#{productPrice}
             </if>
 
             <if test="productIsEnabledArray !=null">

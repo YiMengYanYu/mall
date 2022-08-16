@@ -5,6 +5,7 @@ import com.ly.constants.viewconstants.ViewConstants;
 import com.ly.pojo.Address;
 import com.ly.pojo.User;
 import com.ly.service.AddressService;
+import com.ly.service.CategoryService;
 import com.ly.service.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
@@ -15,6 +16,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
+import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
 import java.util.Hashtable;
 import java.util.List;
@@ -31,9 +34,11 @@ public class RegisterController {
 
 
     @Resource
-    AddressService addressService;
+    private AddressService addressService;
     @Resource
-    UserService userService;
+    private UserService userService;
+    @Resource
+    private CategoryService categoryService;
 
 
     @GetMapping("/register")
@@ -64,8 +69,11 @@ public class RegisterController {
 
     @ResponseBody
     @PostMapping("/register/doRegister")
-    public Map<String, Boolean> doRegister(User user) {
-        System.out.println(user);
+    public Map<String, Boolean> doRegister(User user, HttpServletRequest httpServletRequest) {
+        ServletContext servletContext = httpServletRequest.getServletContext();
+        servletContext.setAttribute("categoryList", categoryService.getCategoryAllImpl2());
+
+
         Boolean register = userService.register(user);
         Map<String, Boolean> map = new HashMap<>(2);
         map.put("success", register);

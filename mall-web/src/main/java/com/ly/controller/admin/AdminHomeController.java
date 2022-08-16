@@ -52,43 +52,6 @@ public class AdminHomeController {
         return "/admin/homePage";
     }
 
-    @GetMapping("/admin/product")
-    public String product(Model model) {
-        Integer[] integers = {0, 1, 2};
-        PageUtil<Product> page = productService.getProduct(null, null, null, null, integers, null, null, 0, 10);
-
-        model.addAttribute("productList",page.getList());
-        return "/admin/productManagePage";
-    }
-
-    /**
-     * @param productName
-     * @param categoryId
-     * @param productSalePrice
-     * @param productPrice
-     * @param productIsEnabledArray
-     * @param orderBy
-     * @param isDesc
-     * @param startIndex
-     * @param pageSize
-     * @return
-     */
-    @ResponseBody
-    @GetMapping("/admin/product/{startIndex}/{pageSize}")
-    public Map<String, Object> productPage(String productName, Integer categoryId, Integer productSalePrice, Integer productPrice, Integer[] productIsEnabledArray, String orderBy, Boolean isDesc, @PathVariable("startIndex") Integer startIndex, @PathVariable("pageSize") Integer pageSize) {
-        System.out.println();
-        String name = null;
-        try {
-            name = URLDecoder.decode(productName, "utf-8");
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-        }
-        PageUtil<Product> pageUtil = productService.getProduct(name, categoryId, productSalePrice, productPrice, productIsEnabledArray, orderBy, isDesc, startIndex, pageSize);
-        System.err.println(pageUtil.getTotalPage());
-        Map<String, Object> map = new HashMap<>(2);
-        map.put("pageUtil", pageUtil);
-        return map;
-    }
 
 
 }

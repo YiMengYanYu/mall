@@ -16,7 +16,7 @@ public interface ProductMapper extends BaseMapper<Product> {
 
     Long getProductCount();
 
-    List<Product> getProduct(@Param("productName") String productName,@Param("categoryId") Integer categoryId, @Param("productSalePrice") Integer productSalePrice, @Param("productPrice") Integer productPrice,@Param("productIsEnabledArray") Integer[] productIsEnabledArray,@Param("orderBy") String orderBy,@Param("isDesc") Boolean isDesc);
+    List<Product> getProduct(@Param("productName") String productName,@Param("categoryId") Integer categoryId, @Param("productSalePrice") Double productSalePrice, @Param("productPrice") Double productPrice,@Param("productIsEnabledArray") Integer[] productIsEnabledArray,@Param("orderBy") String orderBy,@Param("isDesc") Boolean isDesc);
 
 
 }

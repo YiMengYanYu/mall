@@ -170,7 +170,7 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public PageUtil<Product> getProduct(String productName, Integer categoryId, Integer productSalePrice, Integer productPrice, Integer[] productIsEnabledArray, String orderBy, Boolean isDesc, Integer startIndex, Integer pageSize) {
+    public PageUtil<Product> getProduct(String productName, Integer categoryId, Double productSalePrice, Double productPrice, Integer[] productIsEnabledArray, String orderBy, Boolean isDesc, Integer startIndex, Integer pageSize) {
         PageHelper.startPage(startIndex + 1, pageSize);
         List<Product> product = productMapper.getProduct(productName, categoryId, productSalePrice, productPrice, productIsEnabledArray, orderBy, isDesc);
         PageInfo pageInfo = new PageInfo(product);

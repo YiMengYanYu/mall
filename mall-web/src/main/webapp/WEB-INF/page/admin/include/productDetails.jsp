@@ -5,6 +5,9 @@
 <script type="text/javascript">
     var contextPath = "${ctx}";
 </script>
+<%--
+商品详情页面
+--%>
 <html>
 <head>
     <script>
@@ -225,6 +228,7 @@
             $(".details_picList").on("click","li:not(.details_picList_fileUpload)",function () {
                 var img = $(this);
                 var productImageId = img.children("img").attr("name");
+                var productSrc = img.children("img").attr("src");
                 var fileUploadInput = $(this).parents("ul").children(".details_picList_fileUpload");
                 if (productImageId === "new") {
                     $("#btn-ok").unbind("click").click(function () {
@@ -235,7 +239,7 @@
                 } else {
                     $("#btn-ok").unbind("click").click(function () {
                         $.ajax({
-                            url: "/mall/admin/productImage/" + productImageId,
+                            url: encodeURI("/mall/admin/productImage/" + productImageId+"?src="+productSrc),
                             type: "delete",
                             data: null,
                             success: function (data) {
@@ -449,7 +453,7 @@
     <div class="frm_div_last warn_height">
         <label class="frm_label text_info" id="lbl_product_category_id" for="select_product_category">产品类型</label>
         <select class="selectpicker" id="select_product_category" data-size="8">
-            <c:forEach items="${requestScope.categoryList}" var="category">
+            <c:forEach items="${categoryList}" var="category">
                 <option value="${category.categoryId}">${category.categoryName}</option>
             </c:forEach>
         </select>
@@ -491,9 +495,9 @@
     <ul class="details_picList" id="product_single_list">
         <c:forEach items="${requestScope.product.singleProductImageList}" var="image">
             <li><img
-                    src="${ctx}/res/images/item/productSinglePicture/${image.productImageSrc}"
-                    id="pic_single_${image.productImageId}" width="128px" height="128px"
-                    name="${image.productImageId}"/></li>
+                    src="${ctx}/res/images/item/productSinglePicture/${image.productimageSrc}"
+                    id="pic_single_${image.productimageId}" width="128px" height="128px"
+                    name="${image.productimageId}"/></li>
         </c:forEach>
         <li class="details_picList_fileUpload">
             <svg class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="1528"  width="40" height="40">
@@ -510,9 +514,9 @@
     <ul class="details_picList" id="product_details_list">
         <c:forEach items="${requestScope.product.detailProductImageList}" var="image">
             <li><img
-                    src="${ctx}/res/images/item/productDetailsPicture/${image.productImageSrc}"
-                    id="pic_details_${image.productImageId}" width="128px" height="128px"
-                    name="${image.productImageId}"/></li>
+                    src="${ctx}/res/images/item/productDetailsPicture/${image.productimageSrc}"
+                    id="pic_details_${image.productimageId}" width="128px" height="128px"
+                    name="${image.productimageId}"/></li>
         </c:forEach>
         <li class="details_picList_fileUpload">
             <svg class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="1528"  width="40" height="40">

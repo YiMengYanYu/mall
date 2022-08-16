@@ -41,3 +41,4 @@ pagehelper:
   helperDialect: mysql
   reasonable: true
   autoRuntimeDialect: true
+

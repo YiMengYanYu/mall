@@ -27,6 +27,6 @@ public interface ProductService {
 
     Long getProductCount();
 
-    PageUtil<Product> getProduct(String productName, Integer categoryId, Integer productSalePrice, Integer productPrice, Integer[] productIsEnabledArray, String orderBy, Boolean isDesc, Integer startIndex, Integer pageSize);
+    PageUtil<Product> getProduct(String productName, Integer categoryId, Double productSalePrice, Double productPrice, Integer[] productIsEnabledArray, String orderBy, Boolean isDesc, Integer startIndex, Integer pageSize);
 
 }
