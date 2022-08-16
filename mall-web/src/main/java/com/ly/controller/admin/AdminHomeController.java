@@ -48,7 +48,6 @@ public class AdminHomeController {
         model.addAttribute("userTotal", userService.getUserCount());
         model.addAttribute("orderTotal", productorderService.getProductorderCount());
         httpRequest.getServletContext().setAttribute("categoryList", categoryService.getCategoryAllImpl2());
-
         return "/admin/homePage";
     }
 

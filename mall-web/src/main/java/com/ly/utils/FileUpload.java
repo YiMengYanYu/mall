@@ -1,10 +1,10 @@
 package com.ly.utils;
 
 
-
 import com.ly.exception.FileUploadException;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.io.FilenameUtils;
+import org.apache.ibatis.io.Resources;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.imageio.ImageIO;
@@ -52,9 +52,11 @@ public class FileUpload {
     /**
      * 要上传文件的起始位置
      */
-    public static  final String FILE_START_LOCATION="res/images/item";
+    public static final String FILE_START_LOCATION = "res/images/item";
+
     /**
      * 判断MultipartFile动态数组是否为空
+     *
      * @param attachs
      * @return
      */
@@ -152,7 +154,7 @@ public class FileUpload {
                 throw new FileUploadException(FILE_EMPTY_EXCEPTION);
             }
             //获取目标上传的目录路径
-            String path = session.getServletContext().getRealPath( FILE_START_LOCATION+ File.separator + targetPath);
+            String path = session.getServletContext().getRealPath(FILE_START_LOCATION + File.separator + targetPath);
             File file = new File(path);
             if (!file.exists()) {
                 file.mkdirs();
@@ -206,12 +208,14 @@ public class FileUpload {
         for (int i = 0; i < attachs.length; i++) {
             MultipartFile attach = attachs[i];
             //判断文件是否为空
-            if (attach==null||attach.isEmpty()) {
+            if (attach == null || attach.isEmpty()) {
                 throw new FileUploadException(FILE_EMPTY_EXCEPTION);
             }
             //获取目标上传的目录路径
             String path = session.getServletContext().getRealPath(FILE_START_LOCATION + File.separator + targetPath);
             File file = new File(path);
+
+
             if (!file.exists()) {
                 file.mkdirs();
             }

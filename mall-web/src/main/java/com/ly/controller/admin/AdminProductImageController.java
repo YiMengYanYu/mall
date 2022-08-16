@@ -2,6 +2,7 @@ package com.ly.controller.admin;
 
 
 import com.ly.service.ProductimageService;
+import com.ly.utils.FileUpload;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -14,6 +15,7 @@ import java.net.URLDecoder;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -27,11 +29,7 @@ public class AdminProductImageController {
     @Resource
     private ProductimageService productimageService;
 
-    public static void main(String[] args) {
-        String img = "/mall/res/images/item/productSinglePicture/494081e5-fdca-4af6-bf4d-c6854c0ee02d.jpg";
 
-
-    }
 
     @ResponseBody
     @DeleteMapping("/productImage/{id}")
@@ -59,8 +57,20 @@ public class AdminProductImageController {
 
     }
 
+    @ResponseBody
     @PostMapping("/uploadProductImage")
-    public void uploadProductImage(MultipartFile file, String imageType) {
-        
+    public Map<String, Object> uploadProductImage(MultipartFile file, String imageType, HttpSession httpSession) {
+        Map<String, Object> map = new HashMap<>(2);
+        if ("single".equals(imageType)) {
+
+            final List<String> list = FileUpload.saveImgUpload(httpSession, "/productSinglePicture", file);
+            map.put("fileName", list.get(0));
+            map.put("success", true);
+        } else {
+            final List<String> list = FileUpload.saveImgUpload(httpSession, "/productDetailsPicture", file);
+            map.put("fileName", list.get(0));
+            map.put("success", true);
+        }
+        return map;
     }
 }
