@@ -46,6 +46,12 @@ public class CategoryServiceImpl implements CategoryService {
         return categories;
     }
 
+    @Override
+    public List<Category> getCategory() {
+
+        return categoryMapper.selectList(null);
+    }
+
     /**
      * 使用mybatis-plus实现
      *

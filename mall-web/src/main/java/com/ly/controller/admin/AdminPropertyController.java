@@ -27,14 +27,15 @@ public class AdminPropertyController {
     @Resource
     private PropertyService propertyService;
 
-//    @Resource
-//    private ProductService productService;
+    @Resource
+    private ProductService productService;
 
     @ResponseBody
     @GetMapping("/property/type/{id}")
     public Map<String, Object> propertyType(@PathVariable("id") String id) {
         Map<String, Object> map = new HashMap<>(2);
-        List<Property> property = propertyService.getProperty(id);
+        Product productByProductId = productService.getProductByProductId(id);
+        List<Property> property = propertyService.getProperty(""+productByProductId.getProductCategoryId());
         map.put("propertyList", property);
         return map;
     }

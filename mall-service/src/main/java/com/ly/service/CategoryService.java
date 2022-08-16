@@ -13,6 +13,7 @@ public interface CategoryService {
 
     @Deprecated
     List<Category> getCategoryAll();
+    List<Category> getCategory();
 
     List<Category> getCategoryAllImpl2();
 

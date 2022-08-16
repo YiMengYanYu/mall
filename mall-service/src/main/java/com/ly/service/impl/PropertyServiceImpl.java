@@ -20,6 +20,11 @@ public class PropertyServiceImpl implements PropertyService {
     private PropertyMapper propertyMapper;
 
     @Override
+    public List<Property> getPropertyAndPropertyvalue(String id, String cid) {
+        return propertyMapper.getPropertyAndPropertyvalue(id,cid);
+    }
+
+    @Override
     public List<Property> getPropertyAndPropertyvalue(String id) {
         return propertyMapper.getPropertyAndPropertyvalue(id);
     }

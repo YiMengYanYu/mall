@@ -38,7 +38,7 @@
                 and `productPrice` &lt;=#{productPrice}
             </if>
 
-            <if test="productIsEnabledArray !=null">
+            <if test="productIsEnabledArray !=null ">
                 and productIsEnabled IN
                 <foreach collection="productIsEnabledArray" item="item" index="index" open="(" separator="," close=")">
                     #{item}

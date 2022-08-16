@@ -21,8 +21,8 @@ public class DataList {
     String propertyAddJson;
     String propertyUpdateJson;
     List propertyDeleteList;
-    String productSingleImageList;
-    String productDetailsImageList;
+    List<String> productSingleImageList;
+    List<String> productDetailsImageList;
 
 
 }

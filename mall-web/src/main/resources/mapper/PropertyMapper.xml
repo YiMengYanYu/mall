@@ -17,9 +17,19 @@
     </resultMap>
     <select id="getPropertyAndPropertyvalue" resultType="Property" resultMap="rep1">
         SELECT `propertyId`,`propertyName`,`propertyCategoryId`,
-               `propertyValueId`,`propertyValueValue`,`propertyValuePropertyId`,`propertyValueProductId`
+        `propertyValueId`,`propertyValueValue`,`propertyValuePropertyId`,`propertyValueProductId`
         FROM `property`,`propertyvalue`
-        WHERE `propertyId`=`propertyValuePropertyId` AND propertyValueProductId=#{id}
+        <where>
+            `propertyId`=`propertyValuePropertyId`
+            <if test="id!=null">
+                AND propertyValueProductId=#{id}
+            </if>
+            <if test="cid!=null">
+                AND
+                `property`.`propertyCategoryId`=#{cid}
+            </if>
+        </where>
+
     </select>
 
 </mapper>

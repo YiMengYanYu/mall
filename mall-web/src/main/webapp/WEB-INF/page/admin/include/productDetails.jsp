@@ -97,7 +97,7 @@
                 });
             } else {
                 //设置产品种类值
-                $('#select_product_category').selectpicker('val','${requestScope.product.productCategory.categoryId}');
+                $('#select_product_category').selectpicker('val','${requestScope.product.productCategoryId}');
                 //设置产品状态
                 var productIsEnabled = '${requestScope.product.productIsEnabled}';
                 $("input[name='radio_product_isEnabled']").each(function () {
@@ -192,14 +192,14 @@
                     $("#product_single_list").children("li:not(.details_picList_fileUpload)").each(function () {
                         var img = $(this).children("img");
                         if (img.attr("name") === "new") {
-                            productSingleImageList.push(img.attr("src"));
+                            productSingleImageList.push(img.attr("imgname"));
                         }
                     });
                     var productDetailsImageList = [];
                     $("#product_details_list").children("li:not(.details_picList_fileUpload)").each(function () {
                         var img = $(this).children("img");
                         if (img.attr("name") === "new") {
-                            productDetailsImageList.push(img.attr("src"));
+                            productDetailsImageList.push(img.attr("imgname"));
                         }
                     });
 
@@ -366,10 +366,10 @@
                     $(fileDom).attr("disabled", false).prev("span").text("上传图片");
                     if (data.success) {
                         if (type === "single") {
-                            $(fileDom).parent('.details_picList_fileUpload').before("<li><img src='${ctx}/res/images/item/productSinglePicture/" + data.fileName + "' width='128px' height='128px' name='new'/></li>");
+                            $(fileDom).parent('.details_picList_fileUpload').before("<li><img src='${ctx}/res/images/item/productSinglePicture/" + data.fileName + "' width='128px' height='128px' name='new' imgname='"+data.fileName+"'/></li>");
                             checkFileUpload(ul, 5);
                         } else {
-                            $(fileDom).parent('.details_picList_fileUpload').before("<li><img src='${ctx}/res/images/item/productDetailsPicture/" + data.fileName + "' width='128px' height='128px' name='new'/></li>");
+                            $(fileDom).parent('.details_picList_fileUpload').before("<li><img src='${ctx}/res/images/item/productDetailsPicture/" + data.fileName + "' width='128px' height='128px' name='new' imgname='"+data.fileName+"'/></li>");
                             checkFileUpload(ul, 8);
                         }
                     } else {
@@ -453,7 +453,7 @@
     <div class="frm_div_last warn_height">
         <label class="frm_label text_info" id="lbl_product_category_id" for="select_product_category">产品类型</label>
         <select class="selectpicker" id="select_product_category" data-size="8">
-            <c:forEach items="${categoryList}" var="category">
+            <c:forEach items="${requestScope.categoryList}" var="category">
                 <option value="${category.categoryId}">${category.categoryName}</option>
             </c:forEach>
         </select>
@@ -497,7 +497,7 @@
             <li><img
                     src="${ctx}/res/images/item/productSinglePicture/${image.productimageSrc}"
                     id="pic_single_${image.productimageId}" width="128px" height="128px"
-                    name="${image.productimageId}"/></li>
+                    name="${image.productimageId}" imgname="${image.productimageSrc}"/></li>
         </c:forEach>
         <li class="details_picList_fileUpload">
             <svg class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="1528"  width="40" height="40">
@@ -516,7 +516,7 @@
             <li><img
                     src="${ctx}/res/images/item/productDetailsPicture/${image.productimageSrc}"
                     id="pic_details_${image.productimageId}" width="128px" height="128px"
-                    name="${image.productimageId}"/></li>
+                    name="${image.productimageId}" imgname="${image.productimageSrc}"/></li>
         </c:forEach>
         <li class="details_picList_fileUpload">
             <svg class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="1528"  width="40" height="40">

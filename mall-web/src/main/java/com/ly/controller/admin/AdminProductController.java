@@ -3,10 +3,10 @@ package com.ly.controller.admin;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.ly.pojo.Product;
+import com.ly.pojo.Productimage;
 import com.ly.pojo.Property;
-import com.ly.service.CategoryService;
-import com.ly.service.ProductService;
-import com.ly.service.PropertyService;
+import com.ly.pojo.Propertyvalue;
+import com.ly.service.*;
 import com.ly.utils.PageUtil;
 import com.ly.vo.DataList;
 import org.springframework.stereotype.Controller;
@@ -41,7 +41,10 @@ public class AdminProductController {
     private PropertyService propertyService;
     @Resource
     private ProductService productService;
-
+    @Resource
+    private PropertyvalueService propertyvalueService;
+    @Resource
+    private ProductimageService productimageService;
 
     /**
      * @param productName
@@ -57,13 +60,16 @@ public class AdminProductController {
      */
     @ResponseBody
     @GetMapping("/product/{startIndex}/{pageSize}")
-    public Map<String, Object> productPage(String productName, Integer categoryId, Double productSalePrice, Double productPrice, Integer[] productIsEnabledArray, String orderBy, Boolean isDesc, @PathVariable("startIndex") Integer startIndex, @PathVariable("pageSize") Integer pageSize) {
+    public Map<String, Object> productPage(@RequestParam(defaultValue = "") String productName, Integer categoryId, Double productSalePrice, Double productPrice, Integer[] productIsEnabledArray, String orderBy, Boolean isDesc, @PathVariable("startIndex") Integer startIndex, @PathVariable("pageSize") Integer pageSize) {
         System.out.println();
         String name = null;
         try {
             name = URLDecoder.decode(productName, "utf-8");
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
+        }
+        if ( productIsEnabledArray==null ||productIsEnabledArray.length == 0) {
+            productIsEnabledArray = null;
         }
         PageUtil<Product> pageUtil = productService.getProduct(name, categoryId, productSalePrice, productPrice, productIsEnabledArray, orderBy, isDesc, startIndex, pageSize);
         System.err.println(pageUtil.getTotalPage());
@@ -83,31 +89,69 @@ public class AdminProductController {
     @GetMapping("/product/{id}")
     public String getProductInfo(@PathVariable("id") String id, Model model, HttpServletRequest httpServletRequest) {
         ServletContext servletContext = httpServletRequest.getServletContext();
-        servletContext.setAttribute("categoryList", categoryService.getCategoryAllImpl2());
 
+        model.addAttribute("categoryList", categoryService.getCategory());
         Product product = productService.getProductByProductId(id);
-        List<Property> propertyList = propertyService.getPropertyAndPropertyvalue("" + product.getProductCategoryId());
+        List<Property> propertyList = propertyService.getPropertyAndPropertyvalue(id, "" + product.getProductCategoryId());
         model.addAttribute("propertyList", propertyList);
         model.addAttribute("product", product);
         return "admin/include/productDetails";
     }
 
+    @ResponseBody
     @Transactional
     @PutMapping("/product/{id}")
-    public Map<String, Object> putProduct(@PathVariable("id") String id, DataList dataList) {
-
+    public Map<String, Object> putProduct(@PathVariable("id") Long id, DataList dataList) {
         DataList dataList1 = dataList;
         Map<Integer, String> map = null;
+
+        Product product = new Product();
+        product.setProductId(id);
+        product.setProductName(dataList.getProductName());
+        product.setProductTitle(dataList.getProductTitle());
+        product.setProductPrice(dataList.getProductPrice());
+        product.setProductSalePrice(dataList.getProductSalePrice());
+        product.setProductCategoryId(dataList.getProductCategoryId());
+        product.setProductIsEnabled(dataList.getProductIsEnabled());
+        productService.putProduct(product);
+        if (dataList.getProductDetailsImageList() != null) {
+            for (String o : dataList.getProductDetailsImageList()) {
+                Productimage productimage = new Productimage();
+                productimage.setProductimageProductId(id);
+                productimage.setProductimageSrc(o);
+                productimage.setProductimageType(1);
+                productimageService.insertProductimage(productimage);
+            }
+        }
+        if (dataList.getProductSingleImageList() != null) {
+            for (String s : dataList.getProductSingleImageList()) {
+                Productimage productimage = new Productimage();
+                productimage.setProductimageProductId(id);
+                productimage.setProductimageSrc(s);
+                productimage.setProductimageType(0);
+                productimageService.insertProductimage(productimage);
+            }
+        }
+
 
         try {
             map = objectMapper.readValue(dataList.getPropertyAddJson(), Map.class);
         } catch (JsonProcessingException e) {
             e.printStackTrace();
         }
-        for (Map.Entry<Integer, String> integerStringEntry : map.entrySet()) {
 
+
+        for (Map.Entry<Integer, String> ism : map.entrySet()) {
+            Propertyvalue propertyvalue = new Propertyvalue();
+            propertyvalue.setPropertyValueProductId(id);
+            propertyvalue.setPropertyValuePropertyId(Long.parseLong(String.valueOf(ism.getKey())));
+            propertyvalue.setPropertyValueValue(ism.getValue());
+            propertyvalueService.insertPropertyvalue(propertyvalue);
         }
-        return null;
+        Map<String, Object> som = new HashMap<>(2);
+        som.put("success", true);
+        som.put("productId", id);
+        return som;
     }
 
 
