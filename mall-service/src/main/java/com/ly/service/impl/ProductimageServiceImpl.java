@@ -1,6 +1,7 @@
 package com.ly.service.impl;
 
 import com.ly.mapper.ProductimageMapper;
+import com.ly.pojo.Productimage;
 import com.ly.service.ProductimageService;
 import org.springframework.stereotype.Service;
 
@@ -20,5 +21,15 @@ public class ProductimageServiceImpl implements ProductimageService {
     public Boolean delImgById(Integer id) {
         return productimageMapper.deleteById(id) > 0;
  
+    }
+
+    @Override
+    public Boolean putProductimage(Productimage productimage) {
+        return productimageMapper.updateById(productimage)>0;
+    }
+
+    @Override
+    public Boolean insertProductimage(Productimage productimage) {
+        return productimageMapper.insert(productimage)>0;
     }
 }

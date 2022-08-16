@@ -184,6 +184,11 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
+    public Boolean putProduct(Product product) {
+        return productMapper.updateById(product)>0;
+    }
+
+    @Override
     public Product getProductByProductId(String productId) {
         //Product products  = redisUtil.getCache("getProductByProductId", Product.class);
         // if (products==null) {

@@ -1,5 +1,7 @@
 package com.ly.service;
 
-public interface PropertyvalueService {
+import com.ly.pojo.Propertyvalue;
 
+public interface PropertyvalueService {
+    Boolean insertPropertyvalue(Propertyvalue propertyvalue);
 }

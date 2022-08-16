@@ -8,5 +8,5 @@ public interface PropertyService {
 
 
     List<Property> getPropertyAndPropertyvalue(String id);
-
+    List<Property> getProperty(String id);
 }

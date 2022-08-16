@@ -1,5 +1,6 @@
 package com.ly.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.ly.mapper.PropertyMapper;
 import com.ly.pojo.Property;
 import com.ly.service.PropertyService;
@@ -21,5 +22,12 @@ public class PropertyServiceImpl implements PropertyService {
     @Override
     public List<Property> getPropertyAndPropertyvalue(String id) {
         return propertyMapper.getPropertyAndPropertyvalue(id);
+    }
+
+    @Override
+    public List<Property> getProperty(String id) {
+        QueryWrapper<Property> propertyQueryWrapper= new QueryWrapper<>();
+        propertyQueryWrapper.eq("propertyCategoryId",id);
+        return propertyMapper.selectList(propertyQueryWrapper);
     }
 }

@@ -1,13 +1,14 @@
 package com.ly.pojo;
 
 import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableId;
 import lombok.Data;
 
 import java.util.List;
 
 @Data
 public class Product {
-
+    @TableId
     private long productId;
     private String productName;
     private String productTitle;

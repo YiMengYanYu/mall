@@ -537,11 +537,11 @@
                        for="input_product_property_${property.propertyId}">${property.propertyName}</label>
                 <c:choose>
                     <c:when test="${property.propertyValueList != null}">
-                        <c:forEach items="${property.propertyValueList}" var="propertyValue">
+<%--                        <c:forEach items="${property.propertyValueList}" var="propertyValue">--%>
                             <input class="frm_input" id="input_product_property_${property.propertyId}" type="text"
-                                   maxlength="50" value="${propertyValue.propertyValueValue}"
-                                   data-pvid="${propertyValue.propertyValueId}"/>
-                        </c:forEach>
+                                   maxlength="50" value="${property.propertyValueList.propertyValueValue}"
+                                   data-pvid="${property.propertyValueList.propertyValueId}"/>
+<%--                        </c:forEach>--%>
                     </c:when>
                     <c:otherwise>
                         <input class="frm_input" id="input_product_property_${property.propertyId}" type="text"
@@ -554,11 +554,11 @@
                        for="input_product_property_${property.propertyId}">${property.propertyName}</label>
                 <c:choose>
                     <c:when test="${property.propertyValueList != null}">
-                        <c:forEach items="${property.propertyValueList}" var="propertyValue">
+<%--                        <c:forEach items="${property.propertyValueList}" var="propertyValue">--%>
                             <input class="frm_input" id="input_product_property_${property.propertyId}" type="text"
-                                   maxlength="50" value="${propertyValue.propertyValueValue}"
-                                   data-pvid="${propertyValue.propertyValueId}"/>
-                        </c:forEach>
+                                   maxlength="50" value="${property.propertyValueList.propertyValueValue}"
+                                   data-pvid="${property.propertyValueList.propertyValueId}"/>
+<%--                        </c:forEach>--%>
                     </c:when>
                     <c:otherwise>
                         <input class="frm_input" id="input_product_property_${property.propertyId}" type="text"

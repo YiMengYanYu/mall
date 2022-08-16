@@ -13,5 +13,5 @@ import java.util.List;
 public interface PropertyMapper  extends BaseMapper<Property> {
    List<Property> getPropertyAndPropertyvalue(String id);
 
-  Long  getProductCount();
+    Long  getProductCount();
 }

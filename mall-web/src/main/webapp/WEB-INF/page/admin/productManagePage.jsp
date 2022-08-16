@@ -136,7 +136,7 @@
                             var productId = data.pageUtil.list[i].productId;
                             var productName = data.pageUtil.list[i].productName;
                             var productTitle = data.pageUtil.list[i].productTitle;
-                            var productCreateDate = data.pageUtil.list[i].productCreateDate;
+                            var productCreateDate = chineseDateFormat(data.pageUtil.list[i].productCreateDate,'YYYY-MM-DD HH:mm:ss');
                             //显示产品数据
                             tbody.append("<tr><td><input type='checkbox' class='cbx_select' id='cbx_product_select_" + productId + "'><label for='cbx_product_select_" + productId + "'></label></td><td title='"+productName+"'>" + productName + "</td><td title='"+productTitle+"'>" + productTitle + "</td><td title='"+productPrice+"'>" + productPrice + "</td><td title='"+productSalePrice+"'>" + productSalePrice + "</td><td title='"+productCreateDate+"'>" + productCreateDate + "</td><td><span class='" + isEnabledClass + "' title='"+isEnabledTitle+"'>"+ isEnabled + "</span></td><td><span class='td_special' title='查看产品详情'><a href='javascript:void(0);' onclick='getChildPage(this)'>详情</a></span></td><td hidden><span class='productId'>" + productId + "</span></td></tr>");
                         }
@@ -162,6 +162,33 @@
 
                 }
             });
+        }
+    function   chineseDateFormat (timestamp, format) {
+            if (String(timestamp).length === 10) {
+                timestamp = timestamp * 1000
+            }
+            var date = new Date(timestamp)
+            var Y = date.getFullYear()
+            var M = date.getMonth() + 1
+            var D = date.getDate()
+            var hour = date.getHours()
+            var min = date.getMinutes()
+            var sec = date.getSeconds()
+            if (format === 'YYYY') {
+                return Y + '-' // 2021年
+            } else if (format === 'YYYY-MM') { // 2021年07月
+                return Y + '-' + (M < 10 ? '0' + M : M) + '-'
+            } else if (format === 'YYYY-MM-DD') { // 2021年07月12日
+                return Y + '-' + (M < 10 ? '0' + M : M) + '-' + (D < 10 ? '0' + D : D) + ''
+            } else if (format === 'HH:mm:ss') { // 10点20分35秒
+                return (hour < 10 ? '0' + hour : hour) + ':' + (min < 10 ? '0' + min : min) + ':' + (sec < 10 ? '0' + sec : sec) + ':'
+            } else if (format === 'YYYY-MM-DD HH:mm') { // 2021年07月12日 10时20分
+                return Y + '-' + (M < 10 ? '0' + M : M) + '-' + (D < 10 ? '0' + D : D) + '- ' + (hour < 10 ? '0' + hour : hour) + ':' + (min < 10 ? '0' + min : min) + ':'
+            } else if (format === 'YYYY-MM-DD HH:mm:ss') { // 2021年07月12日 10时20分35秒
+                return Y + '-' + (M < 10 ? '0' + M : M) + '-' + (D < 10 ? '0' + D : D) + '- ' + (hour < 10 ? '0' + hour : hour) + ':' + (min < 10 ? '0' + min : min) + ':' + (sec < 10 ? '0' + sec : sec) + ':'
+            } else {
+                return '--'
+            }
         }
 
         //获取产品子界面
