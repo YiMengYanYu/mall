@@ -1,6 +1,8 @@
 package com.ly.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.ly.mapper.CategoryMapper;
 import com.ly.mapper.ProductMapper;
 import com.ly.mapper.ProductimageMapper;
@@ -8,6 +10,7 @@ import com.ly.pojo.Category;
 import com.ly.pojo.Product;
 import com.ly.pojo.Productimage;
 import com.ly.service.CategoryService;
+import com.ly.utils.PageUtil;
 import com.ly.utils.RedisUtil;
 import org.springframework.stereotype.Service;
 
@@ -33,7 +36,6 @@ public class CategoryServiceImpl implements CategoryService {
     private ProductMapper productMapper;
     @Resource
     private ProductimageMapper productimageMapper;
-
 
 
     @Override
@@ -80,5 +82,32 @@ public class CategoryServiceImpl implements CategoryService {
         }
 
         return categories;
+    }
+
+    @Override
+    public PageUtil<Category> getCategoryByName(String name, Integer startIndex, Integer endIndex) {
+        QueryWrapper<Category> queryWrapper = new QueryWrapper<>();
+        if (name != null) {
+            queryWrapper.like("categoryName", name);
+        } else {
+            queryWrapper.like("categoryName", "");
+        }
+        PageHelper.startPage(startIndex + 1, endIndex);
+        List<Category> categories = categoryMapper.selectList(queryWrapper);
+        PageInfo pageInfo = new PageInfo(categories);
+        PageUtil<Category> pageUtil = new PageUtil<>();
+
+        pageUtil.setList(categories);
+        pageUtil.setIndex(startIndex);
+        pageUtil.setTotalPage(pageInfo.getPages());
+        pageUtil.setHasPrev(pageInfo.isHasPreviousPage());
+        pageUtil.setHasNext(pageInfo.isHasNextPage());
+        return pageUtil;
+
+    }
+
+    @Override
+    public Long getCategoryCount() {
+        return categoryMapper.selectCount(null);
     }
 }

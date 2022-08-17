@@ -1,6 +1,7 @@
 package com.ly.service;
 
 import com.ly.pojo.Category;
+import com.ly.utils.PageUtil;
 
 import java.util.List;
 
@@ -13,8 +14,12 @@ public interface CategoryService {
 
     @Deprecated
     List<Category> getCategoryAll();
+
     List<Category> getCategory();
 
     List<Category> getCategoryAllImpl2();
 
+    PageUtil<Category> getCategoryByName(String name, Integer startIndex, Integer endIndex);
+
+    Long getCategoryCount();
 }

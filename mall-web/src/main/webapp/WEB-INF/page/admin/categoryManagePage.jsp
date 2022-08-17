@@ -67,7 +67,7 @@
                             index: data.pageUtil.index,
                             count: data.pageUtil.count,
                             total: data.pageUtil.total,
-                            totalPage: data.totalPage
+                            totalPage: data.pageUtil.totalPage
                         };
                         createPageDiv($(".loader"), pageUtil);
                     }
