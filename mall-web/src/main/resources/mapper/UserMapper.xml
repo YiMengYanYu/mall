@@ -5,7 +5,42 @@
 
 <mapper namespace="com.ly.mapper.UserMapper">
     <select id="getUserCount" resultType="long">
-        SELECT COUNT(1) FROM `user`
+        SELECT COUNT(1)
+        FROM `user`
     </select>
+    <sql id="selectUserAll">
+        SELECT `userId`,
+               `userName`,
+               `userNickName`,
+               `userPassword`,
+               `userRealname`,
+               `userGender`,
+               `userBirthday`,
+               `userAddress`,
+               `userHomePlace`,
+               `userProfilePictureSrc`,
+               `salt`
+        FROM `user`
+    </sql>
 
+    <select id="getUser" resultType="User">
+        <include refid="selectUserAll"></include>
+        <where>
+            <if test="list!=null">
+                and userGender IN
+                <foreach collection="list" item="sex" open="(" separator="," close=")">
+                    #{sex}
+                </foreach>
+            </if>
+            <if test="userName !=null and userName!=''">
+                userName like CONCAT('%',#{userName},'%')
+            </if>
+        </where>
+        <if test="orderBy!=null and orderBy!=''">
+            order by ${orderBy}
+            <if test="isDesc">
+                DESC
+            </if>
+        </if>
+    </select>
 </mapper>

@@ -1,5 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="mf" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <c:set var="ctx" value="${pageContext.request.contextPath}" />
 <script type="text/javascript">
     var contextPath = "${ctx}";
@@ -101,10 +102,10 @@
                             var userId = data.userList[i].userId;
                             var userName = data.userList[i].userName;
                             var userNickName = data.userList[i].userNickName;
-                            var userRealName = data.userList[i].userRealName;
+                            var userRealname = data.userList[i].userRealname;
                             var userBirthday = data.userList[i].userBirthday;
                             //显示用户数据
-                            tbody.append("<tr><td><input type='checkbox' class='cbx_select' id='cbx_user_select_" + userId + "'><label for='cbx_user_select_" + userId + "'></label></td><td title='" + userName + "'>" + userName + "</td><td title='" + userNickName + "'>" + userNickName + "</td><td title='" + userRealName + "'>" + userRealName + "</td><td title='" + userBirthday + "'>" + userBirthday + "</td><td title='" + gender + "'>" + gender + "</td><td><span class='td_special' title='查看用户详情'><a href='javascript:void(0);' onclick='getChildPage(this)'>详情</a></span></td><td hidden  class='userId'>" + userId + "</td></tr>");
+                            tbody.append("<tr><td><input type='checkbox' class='cbx_select' id='cbx_user_select_" + userId + "'><label for='cbx_user_select_" + userId + "'></label></td><td title='" + userName + "'>" + userName + "</td><td title='" + userNickName + "'>" + userNickName + "</td><td title='" + userRealname + "'>" + userRealname + "</td><td title='" + userBirthday + "'>" + userBirthday + "</td><td title='" + gender + "'>" + gender + "</td><td><span class='td_special' title='查看用户详情'><a href='javascript:void(0);' onclick='getChildPage(this)'>详情</a></span></td><td hidden  class='userId'>" + userId + "</td></tr>");
                         }
                         //绑定事件
                         tbody.children("tr").click(function () {
@@ -115,7 +116,7 @@
                             index: data.pageUtil.index,
                             count: data.pageUtil.count,
                             total: data.pageUtil.total,
-                            totalPage: data.totalPage
+                            totalPage: data.pageUtil.totalPage
                         };
                         createPageDiv($(".loader"), pageUtil);
                     }
@@ -199,7 +200,7 @@
                 <span class="orderByDesc"></span>
                 <span class="orderByAsc orderBySelect"></span>
             </th>
-            <th class="data_info" data-sort="asc" data-name="userRealName">
+            <th class="data_info" data-sort="asc" data-name="userRealname">
                 <span>姓名</span>
                 <span class="orderByDesc"></span>
                 <span class="orderByAsc orderBySelect"></span>
@@ -224,8 +225,9 @@
                 <td><input type="checkbox" class="cbx_select" id="cbx_user_select_${user.userId}"><label for="cbx_user_select_${user.userId}"></label></td>
                 <td title="${user.userName}">${user.userName}</td>
                 <td title="${user.userNickName}">${user.userNickName}</td>
-                <td title="${user.userRealName}">${user.userRealName}</td>
-                <td title="${user.userBirthday}">${user.userBirthday}</td>
+                <td title="${user.userRealname}">${user.userRealname}</td>
+                <mf:formatDate value="${user.userBirthday}" pattern="yyyy-MM-dd" var="date"></mf:formatDate>
+                <td title="${date}">${date}</td>
                 <td>
                     <c:choose>
                         <c:when test="${user.userGender==0}">男</c:when>

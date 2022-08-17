@@ -1,16 +1,20 @@
 package com.ly.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.ly.mapper.AddressMapper;
 import com.ly.mapper.UserMapper;
 import com.ly.pojo.Address;
 import com.ly.pojo.User;
 import com.ly.service.UserService;
 import com.ly.utils.CodecUtil;
+import com.ly.utils.PageUtil;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ObjectUtils;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 /**
  * @author YiMeng
@@ -92,5 +96,19 @@ public class UserServiceImpl implements UserService {
     @Override
     public Long getUserCount() {
         return userMapper.getUserCount();
+    }
+
+    @Override
+    public PageUtil<User> getUserPage(Integer startIndex, Integer endIndex, String userName, List user_gender_array, Boolean isDesc, String orderBy) {
+        PageHelper.startPage(startIndex + 1, endIndex);
+        List<User> user = userMapper.getUser(user_gender_array, userName, isDesc, orderBy);
+        PageInfo pageInfo = new PageInfo(user);
+        PageUtil<User> pageUtil = new PageUtil<>();
+        pageUtil.setList(user);
+        pageUtil.setIndex(startIndex);
+        pageUtil.setTotalPage(pageInfo.getPages());
+        pageUtil.setHasPrev(pageInfo.isHasPreviousPage());
+        pageUtil.setHasNext(pageInfo.isHasNextPage());
+        return pageUtil;
     }
 }
