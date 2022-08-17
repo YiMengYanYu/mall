@@ -22,4 +22,11 @@ public interface CategoryService {
     PageUtil<Category> getCategoryByName(String name, Integer startIndex, Integer endIndex);
 
     Long getCategoryCount();
+
+    Category getCategoryById(Long id);
+
+    Boolean updateCategory(Category category);
+
+
+    Boolean insertCategory(Category category);
 }

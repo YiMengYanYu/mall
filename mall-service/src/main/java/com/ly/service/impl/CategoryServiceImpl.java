@@ -110,4 +110,21 @@ public class CategoryServiceImpl implements CategoryService {
     public Long getCategoryCount() {
         return categoryMapper.selectCount(null);
     }
+
+    @Override
+    public Category getCategoryById(Long id) {
+        return categoryMapper.getCategoryById(id);
+    }
+
+    @Override
+    public Boolean updateCategory(Category category) {
+        return categoryMapper.updateById(category) > 0;
+    }
+
+    @Override
+    public Boolean insertCategory(Category category) {
+        return categoryMapper.insert(category) > 0;
+    }
+
+
 }

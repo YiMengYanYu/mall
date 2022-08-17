@@ -16,7 +16,7 @@
                 //单击保存按钮时
                 $("#btn_category_save").click(function () {
                     var categoryName = $.trim($("#input_category_name").val());
-                    var categoryImageSrc = $.trim($("#pic_category").attr("src"));
+                    var categoryImageSrc = $.trim($("#pic_category").attr("imgname"));
 
                     //校验数据合法性
                     var yn = true;
@@ -55,7 +55,7 @@
                 $("#btn_category_save").click(function () {
                     var categoryId = $("#details_category_id").val();
                     var categoryName = $.trim($("#input_category_name").val());
-                    var categoryImageSrc = $.trim($("#pic_category").attr("src"));
+                    var categoryImageSrc = $.trim($("#pic_category").attr("imgname"));
 
                     //校验数据合法性
                     var yn = true;
@@ -147,7 +147,7 @@
                 success: function (data) {
                     $(fileDom).attr("disabled", false).prev("span").text("上传图片");
                     if (data.success) {
-                        $(fileDom).parent('.details_picList_fileUpload').before("<li><img src='${ctx}/res/images/item/categoryPicture/" + data.fileName + "' id='pic_category'  width='1190px' height='150px'/></li>").css("display", "none");
+                        $(fileDom).parent('.details_picList_fileUpload').before("<li><img src='${ctx}/res/images/item/categoryPicture/" + data.fileName + "' id='pic_category'  width='1190px' height='150px' imgname='" + data.fileName + "'/></li>").css("display", "none");
                     } else {
                         alert("图片上传异常！");
                     }

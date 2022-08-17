@@ -29,7 +29,14 @@
                 `property`.`propertyCategoryId`=#{cid}
             </if>
         </where>
-
     </select>
 
+    <select id="getPropertBypropertyCategoryId" resultType="Property">
+        SELECT
+            `propertyId`,
+            `propertyName`,
+            `propertyCategoryId`
+        FROM `property`
+        WHERE `propertyCategoryId` =#{propertyCategoryId}
+    </select>
 </mapper>

@@ -6,8 +6,6 @@
 <mapper namespace="com.ly.mapper.CategoryMapper">
 
 
-
-
     <resultMap id="categoryAll" type="com.ly.pojo.Category">
         <id column="cid" property="categoryId"></id>
         <result column="categoryName" property="categoryName"></result>
@@ -51,7 +49,20 @@
              `product`,
              `productimage`
         WHERE `categoryId` = `productCategoryId`
-          AND `product`.`productId` = `productimage`.`productimageId` AND  `productimageType`=0 LIMIT 0,1000
+          AND `product`.`productId` = `productimage`.`productimageId`
+          AND `productimageType` = 0
+        LIMIT 0,1000
+    </select>
+
+
+    <select id="getCategoryById" resultType="Category">
+        SELECT `categoryId`,`categoryName`,`categoryImageSrc`
+        FROM `category`
+        <where>
+            <if test="id!=null">
+                and `categoryId`=#{id}
+            </if>
+        </where>
     </select>
 
 </mapper>

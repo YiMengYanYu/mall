@@ -21,7 +21,7 @@ public class PropertyServiceImpl implements PropertyService {
 
     @Override
     public List<Property> getPropertyAndPropertyvalue(String id, String cid) {
-        return propertyMapper.getPropertyAndPropertyvalue(id,cid);
+        return propertyMapper.getPropertyAndPropertyvalue(id, cid);
     }
 
     @Override
@@ -31,8 +31,13 @@ public class PropertyServiceImpl implements PropertyService {
 
     @Override
     public List<Property> getProperty(String id) {
-        QueryWrapper<Property> propertyQueryWrapper= new QueryWrapper<>();
-        propertyQueryWrapper.eq("propertyCategoryId",id);
+        QueryWrapper<Property> propertyQueryWrapper = new QueryWrapper<>();
+        propertyQueryWrapper.eq("propertyCategoryId", id);
         return propertyMapper.selectList(propertyQueryWrapper);
+    }
+
+    @Override
+    public List<Property> getPropertBypropertyCategoryId(Long categoryId) {
+        return propertyMapper.getPropertBypropertyCategoryId(categoryId);
     }
 }
