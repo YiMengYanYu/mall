@@ -46,8 +46,9 @@ public class AdminProductImageController {
         decode = decode.substring(5);
         String realPath = httpSession.getServletContext().getRealPath(decode);
         try {
-            Files.delete(Path.of(realPath));
             map.put("success", productimageService.delImgById(id));
+            Files.delete(Path.of(realPath));
+
             return map;
         } catch (IOException e) {
             map.put("success", false);

@@ -174,7 +174,7 @@ public class ProductServiceImpl implements ProductService {
         PageHelper.startPage(startIndex + 1, pageSize);
         List<Product> product = productMapper.getProduct(productName, categoryId, productSalePrice, productPrice, productIsEnabledArray, orderBy, isDesc);
         PageInfo pageInfo = new PageInfo(product);
-        PageUtil<Product> pageUtil =new PageUtil<>();
+        PageUtil<Product> pageUtil = new PageUtil<>();
         pageUtil.setList(product);
         pageUtil.setIndex(startIndex);
         pageUtil.setTotalPage(pageInfo.getPages());
@@ -185,7 +185,12 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public Boolean putProduct(Product product) {
-        return productMapper.updateById(product)>0;
+        return productMapper.updateById(product) > 0;
+    }
+
+    @Override
+    public Boolean insertProduct(Product product) {
+        return productMapper.insert(product) > 0;
     }
 
     @Override

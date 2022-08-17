@@ -30,4 +30,5 @@ public interface ProductService {
     PageUtil<Product> getProduct(String productName, Integer categoryId, Double productSalePrice, Double productPrice, Integer[] productIsEnabledArray, String orderBy, Boolean isDesc, Integer startIndex, Integer pageSize);
 
     Boolean putProduct(Product product);
+    Boolean insertProduct(Product product);
 }

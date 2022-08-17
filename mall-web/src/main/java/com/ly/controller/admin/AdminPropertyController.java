@@ -34,8 +34,8 @@ public class AdminPropertyController {
     @GetMapping("/property/type/{id}")
     public Map<String, Object> propertyType(@PathVariable("id") String id) {
         Map<String, Object> map = new HashMap<>(2);
-        Product productByProductId = productService.getProductByProductId(id);
-        List<Property> property = propertyService.getProperty(""+productByProductId.getProductCategoryId());
+//        Product productByProductId = productService.getProductByProductId(id);
+        List<Property> property = propertyService.getProperty(id);
         map.put("propertyList", property);
         return map;
     }

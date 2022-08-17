@@ -20,6 +20,7 @@ public class DataList {
     Double productSalePrice;
     String propertyAddJson;
     String propertyUpdateJson;
+    String propertyJson;
     List propertyDeleteList;
     List<String> productSingleImageList;
     List<String> productDetailsImageList;

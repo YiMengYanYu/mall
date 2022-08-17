@@ -70,14 +70,14 @@
                     $("#product_single_list").children("li:not(.details_picList_fileUpload)").each(function () {
                         var img = $(this).children("img");
                         if (img.attr("name") === "new") {
-                            productSingleImageList.push(img.attr("src"));
+                            productSingleImageList.push(img.attr("imgname"));
                         }
                     });
                     var productDetailsImageList = [];
                     $("#product_details_list").children("li:not(.details_picList_fileUpload)").each(function () {
                         var img = $(this).children("img");
                         if (img.attr("name") === "new") {
-                            productDetailsImageList.push(img.attr("src"));
+                            productDetailsImageList.push(img.attr("imgname"));
                         }
                     });
 
@@ -453,7 +453,7 @@
     <div class="frm_div_last warn_height">
         <label class="frm_label text_info" id="lbl_product_category_id" for="select_product_category">产品类型</label>
         <select class="selectpicker" id="select_product_category" data-size="8">
-            <c:forEach items="${requestScope.categoryList}" var="category">
+            <c:forEach items="${categoryList}" var="category">
                 <option value="${category.categoryId}">${category.categoryName}</option>
             </c:forEach>
         </select>
