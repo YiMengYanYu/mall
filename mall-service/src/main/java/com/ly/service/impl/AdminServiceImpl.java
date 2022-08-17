@@ -25,4 +25,9 @@ public class AdminServiceImpl implements AdminService {
         return adminMapper.getAdminByUserName(userName);
 
     }
+
+    @Override
+    public Boolean updateAdmin(Admin admin) {
+        return adminMapper.updateById(admin)>0;
+    }
 }

@@ -14,12 +14,12 @@
              ******/
             //单击保存按钮时
             $("#btn_admin_save").click(function () {
-                var adminNickName = $.trim($("#input_admin_nickname").val());
+                var adminNickname = $.trim($("#input_admin_nickname").val());
                 var admin_image_src = null;
                 var adminPassword = null;
                 var adminNewPassword = null;
                 if ($("#admin_profile_picture").hasClass("new")) {
-                    admin_image_src = $.trim($("#admin_profile_picture").attr("src"));
+                    admin_image_src = $.trim($("#admin_profile_picture").attr("imgname"));
                 }
                 if ($(".modifyPwd").css("display") === "block") {
                     adminPassword = $.trim($("#input_admin_password").val());
@@ -49,12 +49,12 @@
                 }
 
                 var dataList = {
-                    "adminNickName": adminNickName,
+                    "adminNickname": adminNickname,
                     "adminProfilePictureSrc": admin_image_src,
                     "adminPassword": adminPassword,
                     "adminNewPassword": adminNewPassword
                 };
-                doAction(dataList, "admin/account/" +${requestScope.admin.adminId}, "PUT");
+                doAction(dataList, "admin/account/" +${admin.adminId}, "PUT");
             });
         });
 
@@ -87,7 +87,9 @@
                                 ajaxUtil.getPage("account", null, true);
                             }, 170);
                         });
+
                         $(".modal-body").text("信息保存成功！");
+                        location=contextPath+"/admin/account/logout";
                         $('#modalDiv').modal();
                     } else {
                         styleUtil.errorShow($("#text_password_details_msg"), data.message);
@@ -141,7 +143,7 @@
                 success: function (data) {
                     $(".loader").css("display", "none");
                     if (data.success) {
-                        $("#admin_profile_picture").addClass("new").attr("src", "${ctx}/res/images/item/adminProfilePicture/" + data.fileName);
+                        $("#admin_profile_picture").addClass("new").attr("src", "${ctx}/res/images/item/adminProfilePicture/" + data.fileName).attr("imgname",data.fileName);
                     } else {
                         alert("图片上传异常！");
                     }
@@ -180,14 +182,14 @@
 </head>
 <body>
 <div class="details_div_first">
-    <input type="hidden" value="${requestScope.admin.adminId}" id="details_admin_id"/>
+    <input type="hidden" value="${admin.adminId}" id="details_admin_id"/>
     <div class="frm_div">
         <label class="frm_label text_info" id="lbl_admin_id">管理员编号</label>
-        <span class="details_value" id="span_admin_id">${requestScope.admin.adminId}</span>
+        <span class="details_value" id="span_admin_id">${admin.adminId}</span>
     </div>
     <div class="frm_div">
         <label class="frm_label text_info" id="lbl_admin_name">账户名</label>
-        <span class="details_value" id="span_admin_name">${requestScope.admin.adminName}</span>
+        <span class="details_value" id="span_admin_name">${admin.adminName}</span>
     </div>
 </div>
 <div class="details_div">
@@ -195,7 +197,7 @@
     <div class="frm_div">
         <label class="frm_label text_info" id="lbl_admin_profile_picture">管理员头像</label>
         <img
-                src="${ctx}/res/images/item/adminProfilePicture/${requestScope.admin.adminProfilePictureSrc}"
+                src="${ctx}/res/images/item/adminProfilePicture/${admin.adminProfilePictureSrc}"
                 id="admin_profile_picture" width="84px" height="84px"
                 onerror="this.src='${ctx}/res/images/admin/loginPage/default_profile_picture-128x128.png'"/>
         <input type="file" onchange="uploadImage(this)" accept="image/*" id="uploadImage">
@@ -203,7 +205,7 @@
     <div class="frm_div">
         <label class="frm_label text_info" id="lbl_admin_nickname" for="input_admin_nickname">管理员昵称</label>
         <input class="frm_input" id="input_admin_nickname" type="text" maxlength="50"
-               value="${requestScope.admin.adminNickName}"/>
+               value="${admin.adminNickname}"/>
     </div>
 </div>
 <div class="details_div">

@@ -11,4 +11,6 @@ public interface AdminService {
 
 
     Admin getAdminByUserName(String userName);
+
+    Boolean updateAdmin(Admin admin);
 }

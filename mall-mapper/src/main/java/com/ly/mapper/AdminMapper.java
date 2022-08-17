@@ -9,7 +9,7 @@ import org.apache.ibatis.annotations.Param;
  * @DateTime: 2022/8/5 18:26
  * @Description: TODO
  */
-public interface AdminMapper extends BaseMapper<AdminMapper> {
+public interface AdminMapper extends BaseMapper<Admin> {
 
 
     Admin getAdminByUserName(@Param("userName") String userName);
