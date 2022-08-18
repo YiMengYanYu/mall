@@ -10,7 +10,7 @@
     <script>
         $(function () {
             //设置订单状态
-            var status_index = '${requestScope.order.productOrderStatus}';
+            var status_index = '${requestScope.order.productorderStatus}';
             switch (status_index) {
                 case '0':
                     $("#wait_point_1").addClass("wait_point_select").children(".wait_point_text").addClass('td_special');
@@ -38,7 +38,7 @@
             });
             //单击发货按钮时
             $("#btn_order_save").click(function () {
-                var orderId = '${requestScope.order.productOrderId}';
+                var orderId = '${requestScope.order.productorderId}';
                 $.ajax({
                     url: "admin/order/" + orderId,
                     type: "PUT",
@@ -134,33 +134,33 @@
 </head>
 <body>
 <div class="details_div_first">
-    <input type="hidden" value="${requestScope.order.productOrderId}" id="details_order_id"/>
+    <input type="hidden" value="${requestScope.order.productorderId}" id="details_order_id"/>
     <div class="frm_div">
         <label class="frm_label text_info" id="lbl_order_id">订单号</label>
-        <span class="details_value" id="span_order_id">${requestScope.order.productOrderCode}</span>
+        <span class="details_value" id="span_order_id">${requestScope.order.productorderCode}</span>
     </div>
     <div class="frm_div">
         <label class="frm_label text_info" id="lbl_order_user">所属用户</label>
         <span class="details_value td_wait"><a id="span_order_user" href="javascript:void(0)"
-                                               onclick="getUserPage(${requestScope.order.productOrderUser.userId})">${requestScope.order.productOrderUser.userNickName}</a></span>
+                                               onclick="getUserPage(${requestScope.order.productorderUser.userId})">${requestScope.order.productorderUser.userNickName}</a></span>
     </div>
 </div>
 <div class="details_div">
     <span class="details_title text_info">基本信息</span>
     <div class="frm_div">
         <label class="frm_label text_info" id="lbl_order_receiver">收货人姓名</label>
-        <span class="details_value" id="span_order_receiver">${requestScope.order.productOrderReceiver}</span>
+        <span class="details_value" id="span_order_receiver">${requestScope.order.productorderReceiver}</span>
     </div>
     <div class="frm_div">
         <label class="frm_label text_info" id="lbl_order_address">收货地址</label>
         <span class="details_value details_value_noRows"
-              id="span_order_address">${requestScope.order.productOrderDetailAddress}</span>
+              id="span_order_address">${requestScope.order.productorderDetailAddress}</span>
     </div>
     <div class="frm_div">
         <label class="frm_label text_info" id="lbl_product_title">邮政编码</label>
-        <span class="details_value" id="span_order_post">${requestScope.order.productOrderPost}</span>
+        <span class="details_value" id="span_order_post">${requestScope.order.productorderPost}</span>
         <label class="frm_label text_info" id="lbl_order_mobile">联系电话</label>
-        <span class="details_value" id="span_order_mobile">${requestScope.order.productOrderMobile}</span>
+        <span class="details_value" id="span_order_mobile">${requestScope.order.productorderMobile}</span>
     </div>
 </div>
 <div class="details_div details_status_spacial">
@@ -200,52 +200,52 @@
         </tr>
         </thead>
         <tbody>
-        <c:forEach items="${requestScope.order.productOrderItemList}" var="item" varStatus="i">
+        <c:forEach items="${requestScope.order.productorderitemList}" var="item" varStatus="i">
             <tr>
                 <td title="产品图片"><img
-                        src="${ctx}/res/images/item/productSinglePicture/${item.productOrderItemProduct.singleProductImageList[0].productImageSrc}"
-                        id="pic_single_${item.productOrderItemProduct.singleProductImageList[0].productImageId}"
+                        src="${ctx}/res/images/item/productSinglePicture/${item.productorderitemProduct.singleProductImageList[0].productimageSrc}"
+                        id="pic_single_${item.productorderitemProduct.singleProductImageList[0].productimageId}"
                         width="42px" height="42px"
-                        name="${item.productOrderItemProduct.singleProductImageList[0].productImageId}"/></td>
-                <td title="${item.productOrderItemProduct.productName}">${item.productOrderItemProduct.productName}</td>
-                <td title="${item.productOrderItemPrice/item.productOrderItemNumber}">${item.productOrderItemPrice/item.productOrderItemNumber}</td>
-                <td title="${item.productOrderItemNumber}">${item.productOrderItemNumber}</td>
-                <td title="${item.productOrderItemPrice}">${item.productOrderItemPrice}</td>
-                <td title="${item.productOrderItemUserMessage}">${item.productOrderItemUserMessage}</td>
+                        name="${item.productorderitemProduct.singleProductImageList[0].productimageId}"/></td>
+                <td title="${item.productorderitemProduct.productName}">${item.productorderitemProduct.productName}</td>
+                <td title="${item.productorderitemPrice/item.productorderitemNumber}">${item.productorderitemPrice/item.productorderitemNumber}</td>
+                <td title="${item.productorderitemNumber}">${item.productorderitemNumber}</td>
+                <td title="${item.productorderitemPrice}">${item.productorderitemPrice}</td>
+                <td title="${item.productorderitemUserMessage}">${item.productorderitemUserMessage}</td>
                 <td><span class="td_special" title="查看产品详情"><a href="javascript:void(0)"
                                                                onclick="getChildPage(this)">详情</a></span></td>
-                <td hidden><span class="productId">${item.productOrderItemProduct.productId}</span></td>
+                <td hidden><span class="productId">${item.productorderitemProduct.productId}</span></td>
             </tr>
         </c:forEach>
         </tbody>
     </table>
 </div>
-<c:if test="${requestScope.order.productOrderStatus != 0 && requestScope.order.productOrderStatus != 4}">
+<c:if test="${requestScope.order.productorderStatus != 0 && requestScope.order.productorderStatus != 4}">
     <div class="details_div details_div_last">
         <span class="details_title text_info">流程时间</span>
         <div class="frm_div">
             <label class="frm_label text_info" id="lbl_order_pay_date">支付日期</label>
             <span class="details_value details_value_noRows"
-                  id="span_order_pay_date">${requestScope.order.productOrderPayDate}</span>
+                  id="span_order_pay_date">${requestScope.order.productorderPayDate}</span>
         </div>
-        <c:if test="${requestScope.order.productOrderStatus != 1}">
+        <c:if test="${requestScope.order.productorderStatus != 1}">
             <div class="frm_div">
                 <label class="frm_label text_info" id="lbl_order_delivery_date">发货日期</label>
                 <span class="details_value details_value_noRows"
-                      id="span_order_delivery_date">${requestScope.order.productOrderDeliveryDate}</span>
+                      id="span_order_delivery_date">${requestScope.order.productorderDeliveryDate}</span>
             </div>
-            <c:if test="${requestScope.order.productOrderStatus == 3}">
+            <c:if test="${requestScope.order.productorderStatus == 3}">
                 <div class="frm_div">
                     <label class="frm_label text_info" id="lbl_order_confirm_date">确认日期</label>
                     <span class="details_value details_value_noRows"
-                          id="span_order_confirm_date">${requestScope.order.productOrderConfirmDate}</span>
+                          id="span_order_confirm_date">${requestScope.order.productorderConfirmDate}</span>
                 </div>
             </c:if>
         </c:if>
     </div>
 </c:if>
 <div class="details_tools_div">
-    <c:if test="${requestScope.order.productOrderStatus==1}">
+    <c:if test="${requestScope.order.productorderStatus==1}">
         <input class="frm_btn" id="btn_order_save" type="button" value="发货"/>
     </c:if>
     <input class="frm_btn frm_clear" id="btn_order_cancel" type="button" value="取消"/>

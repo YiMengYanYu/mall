@@ -41,5 +41,10 @@ public class ProductorderServiceImpl implements ProductorderService {
         return pageUtil;
     }
 
+    @Override
+    public Productorder getProductorderById(Long id) {
+        return productorderMapper.selectById(id);
+    }
+
 
 }

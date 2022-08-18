@@ -8,6 +8,9 @@ import java.util.List;
 
 public interface ProductorderService {
     Long getProductorderCount();
-    PageUtil<Productorder> getProductorder(List productorderStatusArray, String productorderPost, String productorderCode, String orderBy, Boolean isDesc,Integer starIndex,Integer pageSize);
+
+    PageUtil<Productorder> getProductorder(List productorderStatusArray, String productorderPost, String productorderCode, String orderBy, Boolean isDesc, Integer starIndex, Integer pageSize);
+
+    Productorder getProductorderById(Long id);
 
 }
