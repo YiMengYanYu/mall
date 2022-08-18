@@ -5,7 +5,46 @@
 
 <mapper namespace="com.ly.mapper.ProductorderMapper">
     <select id="getProductorderCount" resultType="Long">
-        SELECT COUNT(1) FROM `productorder`
+        SELECT COUNT(1)
+        FROM `productorder`
     </select>
+    <sql id="selectAll">
+        SELECT `productorderId`,
+               `productorderCode`,
+               `productorderAddress`,
+               `productorderDetailAddress`,
+               `productorderPost`,
+               `productorderReceiver`,
+               `productorderMobile`,
+               `productorderPayDate`,
+               `productorderDeliveryDate`,
+               `productorderConfirmDate`,
+               `productorderStatus`,
+               `productorderUserId`
+        FROM `productorder`
+    </sql>
+    <select id="getProductorder" resultType="Productorder">
+        <include refid="selectAll"></include>
+        <where>
+            <if test="productorderPost!=null and productorderPost!=''">
+                and productorderPost=#{productorderPost}
+            </if>
+            <if test="productorderCode!=null and productorderCode!=''">
+                and productorderCode like CONCAT('%',#{productorderCode},'%')
+            </if>
+            <if test="productorderStatusArray !=null ">
+                <foreach collection="productorderStatusArray" item="item" index="index"
+                         open="and productorderStatus IN (" separator="," close=")">
+                    #{item}
+                </foreach>
+            </if>
+        </where>
+        <if test="orderBy!=null and orderBy!=''">
+            order by ${orderBy}
+            <if test="isDesc">
+                DESC
+            </if>
+        </if>
 
+    </select>
 </mapper>

@@ -26,7 +26,7 @@ public class PropertyServiceImpl implements PropertyService {
 
     @Override
     public List<Property> getPropertyAndPropertyvalue(String id) {
-        return propertyMapper.getPropertyAndPropertyvalue(id);
+        return propertyMapper.getPropertyAndPropertyvalue(id,null);
     }
 
     @Override
